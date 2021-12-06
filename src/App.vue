@@ -5,9 +5,9 @@
         <nav>
             <button v-on:click="loadHome">Guarderia</button>
             <button v-on:click="loadProducts">Productos</button>
-            <button v-on:click="loadLogIn">Login</button>
             <button v-on:click="loadAboutUs">About Us</button>
-            <button v-on:click="loadAboutUs">Registrarse</button>
+            <button v-on:click="loadLogIn">Login</button>
+            <button v-on:click="loadSignUp">Registrarse</button>
         </nav>   
     </header>
     <!-- <header>
@@ -104,6 +104,10 @@ export default {
 
     loadAboutUs: function() {
       this.$router.push({ name: "about" });
+    },
+
+    loadAdminUsers: function() {
+      this.$router.push({ name: "AdminUsers" });
     }
 
   }
