@@ -1,87 +1,176 @@
 <template>
-  <div class="body">
-    <div class="home">
-      <header>
-        <div>
-            <a v-on:click="loadHome" class="logo">Guarderia</a>
-            <a v-on:click="loadProducts" class="products">Productos</a>
-            <a v-if="is_auth" v-on:click="logOut"> Cerrar Sesión </a>
-            <a v-if="is_auth" v-on:click="loadAdmin" class="login">Admin</a>
-            <a v-on:click="loadLogIn" class="login">Login</a>
-            
-        </div>   
-      </header>
-      <div class="main-component">
-        //
-          <router-view  
-              v-on:completedLogIn="completedLogIn"
-              v-on:completedSignUp="completedSignUp"
-          >
-          </router-view>
+<div id="app" class="app">
 
-          
-      </div>
-      <footer id="footer">
-        <div>
-            <p class="logo">Guarderia</p>
-        <div class="acerdaDe">
-            <p>Acerca de</p>
-            <p>Sobre Nosotros</p>
+    <header class="header">
+        <nav>
+            <button v-on:click="loadHome">Guarderia</button>
+            <button v-on:click="loadProducts">Productos</button>
+            <button v-on:click="loadLogIn">Login</button>
+            <button v-on:click="loadAboutUs">About Us</button>
+            <button v-on:click="loadAboutUs">Registrarse</button>
+        </nav>   
+    </header>
+    <!-- <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar scroll</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Link
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Link</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
         </div>
-        </div>
-      </footer>
+      </nav>
+    </header> -->
+
+    <div class = "main-component">
+      <router-view
+        v-on:completedLogin="completedLogin"
+        v-on:completedSignUp="compltedSignUp"
+        v-on:logOut="logOut"
+        v-on:loadHome="loadHome"
+        v-on:loadProducts="loadProducts"
+        v-on:loadAboutUs="loadAboutUs"
+        v-on:loadSignUp="loadSignUp"
+      >
+      </router-view>
     </div>
+
+    <footer id="footer" class="footer">
+      <div>
+          <p>Guarderia</p>
+          <p>Acerca de</p>
+          <p>Sobre Nosotros</p>
+      </div>
+    </footer>
+    
+    <!-- <footer class="bg-light text-center text-lg-start">
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright:
+        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+      </div>
+    </footer> -->
+
   </div>
+
 </template>
 
 <script>
-import home from '../src/views/Home';
-import login from '../src/views/LogIn';
-import products from '../src/views/Products'
-
 export default {
+  name: 'App',
 
-  methods:{
-    loadHome: function() {
-          this.$router.push({ name: "Home" });
-        },
+  methods: {
     loadLogIn: function(){
-            this.$router.push({name: "logIn"})
-  },
+      this.$router.push({name: "logIn"});
+    },
+
+    loadSignUp: function(){
+      this.$router.push({name: "signUp"})
+    },
+
+    loadHome: function() {
+      this.$router.push({ name: "home" });
+    },
+
     loadProducts: function() {
-            this.$router.push({ name: "products" });
-          },
+      this.$router.push({ name: "products" });
+    },
+
+    loadAboutUs: function() {
+      this.$router.push({ name: "about" });
+    }
+
   }
 
-  
+
 }
 </script>
 
 
 <style>
-  *{
-    box-sizing:border-box;
-    margin:0;
+
+  body {
+    margin: 0 0 0 0;
   }
-  body{
-    display: flex !important;
-    min-height: 500px !important;
-    padding: 0px !important;
-    width: 100% !important;
-  }
-  .body{
-    min-height: 500px;
-  }
-  #app{
-    width: 100% !important;
-  }
+
   header{
-    height: 70px;
-    width: 100%;  
+    margin: 0%;
+    padding: 0;
+    width: 100%;
+    height: 10vh;
+    min-height: 100px;
+    
+    background-color: #F29F05;
+    color: white; 
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+    top: 0; 
   }
-  .home{
-    margin: 0 auto;
+
+  header nav{
+      width: 100%;
+      height: 100%;
+
+      background-color: #F29F05;
+      color: white; 
+
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
   }
+
+  header nav button{
+    color: white;
+    background: #F29F05;
+    border: 1px none #E5E7E9;
+    padding: 10px 20px;
+  }
+
+  header nav button:hover{
+    color: white;
+    background: #634610;
+    border: 1px none #E5E7E9;
+  }
+
+  .main-component{
+    height: 75vh;
+    margin: 0%;
+    padding: 0%;
+
+    background: #FDFEFE ;
+  }
+
   footer{
         background-color: #ca7c16;    
         margin-top: 25px; 
@@ -91,7 +180,7 @@ export default {
         bottom: 0;
         width: 100%;
     }
-    footer div{
+  footer div{
         display: flex;
         height: 100%;
         align-items: center;
@@ -101,51 +190,17 @@ export default {
         max-width: 1200px;
         margin: 0 auto;
     }
-    .acerdaDe{
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        height: 40px;
-    }
-    header{
-        background-color: #ca7c16; 
-        margin-bottom: 25px;   
-    }
-    header div{
-        display: flex;
-        height: 100%;
-        align-items: center;
-        align-content: space-between;
-        justify-content: space-between;
-        color: white; 
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    .logo{
-        color: rgb(255, 255, 255);
-        text-decoration: none;
-        font-weight: bolder;
-    }
-    .login{
-        background-color: #F2B705; /* Green */
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;;
-    }
-    a.router-link-exact-active{
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+
+ footer nav{
+    width: 100%;
+    height: 100%;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: white; 
+    float: right;
+
   }
 
 </style>
-

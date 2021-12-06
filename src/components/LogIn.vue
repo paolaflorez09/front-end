@@ -57,9 +57,9 @@ export default {
 color: #00152b;
 }
 
-.field {
+/*.field {
     border-radius: 10px;
-}
+}*/
 
 .logIn_user form{
     width: 70%;
