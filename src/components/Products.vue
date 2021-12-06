@@ -42,14 +42,12 @@
             productos: JSON.parse(localStorage.getItem("Productos"))
         }
     },
-
-    
-
     created: function(){
     },
   }
 </script>
 <style>
+
     .list-group{
         background-color: rgba(255, 255, 255, 0.534);
         border-radius: 0.5rem;
@@ -82,36 +80,22 @@
     body{
         margin: 0 0 0 0;
     }
-
     .header{
         margin: 0;
         padding: 0;
         width: 100%;
         height: 10vh; 
         min-height: 100px;
-
         background-color: #283747 ;
         color:#ffffff  ;
-
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-
     .header h1{
         width: 20%;
         text-align: center;
     }
-
-
-
-
-
-
-
-
-
-
     .card {
     /*
     --card-gradient: rgba(0, 0, 0, 0.8);
@@ -119,7 +103,6 @@
     --card-blend-mode: overlay;
      */
     
-
     background-color: rgba(255, 255, 255, 0.534);
     border-radius: 0.5rem;
     box-shadow: 0.05rem 0.1rem 0.3rem -0.03rem rgba(0, 0, 0, 0.45);
@@ -129,7 +112,6 @@
         white max(9.5rem, 27vh)
     );
     overflow: hidden;
-
     }
     img {
     border-radius: 0.5rem 0.5rem 0 0;
@@ -140,25 +122,21 @@
     aspect-ratio: 4/3;
     mix-blend-mode: var(--card-blend-mode);
     
-
     }
-
     :last-child {
     margin-bottom: 0;
     }
-
     :hover,
     :focus-within {
     --card-gradient: #00000075 max(8.5rem, 20vh);
     }
     
-
     /* Additional demo display styles */
     * {
     box-sizing: border-box;
     }
 
-    body {
+    .body {
     display: grid;
     place-content: center;
     justify-items: center;
@@ -171,16 +149,13 @@
     color: #444;
     background-color: #ffffff;
     }
-
     .card h3 {
     margin-top: 1rem;
     font-size: 1.25rem;
     }
-
     .card a {
     color: inherit;
     }
-
     .card-wrapper {
     list-style: none;
     padding: 0;
