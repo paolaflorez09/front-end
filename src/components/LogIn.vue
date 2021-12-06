@@ -35,7 +35,8 @@ export default {
         padding: 0%;
         height: 100%;
         width: 100%;
-
+        padding-top:250px ;
+        padding-bottom: 250px ;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -92,4 +93,6 @@ color: #00152b;
     background: rgb(86, 192, 100);
     border: 1px solid #00152b;
 }
+
+
 </style>
