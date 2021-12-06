@@ -169,5 +169,7 @@
     padding-right: 1rem;
     }
 
-    
+    html {
+        background-color: white;
+    }
 </style>
