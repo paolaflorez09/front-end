@@ -3,11 +3,15 @@
 
     <header class="header">
         <nav>
+          <div>
             <button v-on:click="loadHome">Guarderia</button>
             <button v-on:click="loadProducts">Productos</button>
             <button v-on:click="loadAboutUs">About Us</button>
+          </div>
+          <div>
             <button v-on:click="loadLogIn">Login</button>
-            <button v-on:click="loadSignUp">Registrarse</button>
+            <button v-on:click="loadAboutUs">Registrarse</button>
+          </div>
         </nav>   
     </header>
     <!-- <header>
@@ -119,8 +123,10 @@ export default {
 
 <style>
 
+
   body {
     margin: 0 0 0 0;
+    background-color: #FDFEFE;
   }
 
   header{
@@ -168,21 +174,24 @@ export default {
   }
 
   .main-component{
-    height: 75vh;
+   
     margin: 0%;
     padding: 0%;
 
     background: #FDFEFE ;
   }
 
+
   footer{
+        
         background-color: #ca7c16;    
         margin-top: 25px; 
         height: 80px;
-        position: fixed;
+        
         padding: 10px 10px 0px 10px;
         bottom: 0;
         width: 100%;
+        
     }
   footer div{
         display: flex;
@@ -205,6 +214,10 @@ export default {
     color: white; 
     float: right;
 
+  }
+
+  html{
+    background-color: white;
   }
 
 </style>

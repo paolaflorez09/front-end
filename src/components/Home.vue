@@ -26,7 +26,7 @@
     </p>
   </div>
 </div>
-
+<br>
 </template> 
 
 
@@ -54,7 +54,7 @@ export default {
       helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif;
     color: #444;
     background-color: #ffffff;
-    position: absolute;
+    
     
     overflow: hidden;
     animation: spin var(--duration) var(--delay) linear infinite;
