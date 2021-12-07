@@ -5,21 +5,21 @@
     <header class="header">
         <nav>
           <div>
-            <button v-on:click="toogleFunction(isClicked)">NavBar</button>
             <button v-on:click="loadHome">Guarderia</button>
             <button v-on:click="loadProducts">Productos</button>
             <button v-on:click="loadAboutUs">About Us</button>
           </div>
           <div>
-            <button v-on:click="loadLogIn">Login</button>
-            <button v-on:click="loadSignUp">Registrarse</button>
+            <button v-if="!is_auth" v-on:click="loadLogIn">Login</button>
+            <button v-if="!is_auth" v-on:click="loadSignUp">Registrarse</button>
+            <button v-if="is_auth" v-on:click="logOut"> Cerrar Sesión </button>
           </div>
         </nav>   
     </header>
 
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <div v-if="isClicked" class="col-auto px-0">
+            <div v-if="is_auth" class="col-auto px-0">
                 <div id="sidebar" class="collapse collapse-horizontal show border-end">
                     <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
                         <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-bootstrap"></i> <span>Item</span> </a>
@@ -40,10 +40,6 @@
                   v-on:completedLogIn="completedLogIn"
                   v-on:completedSignUp="completedSignUp"
                   v-on:logOut="logOut"
-                  v-on:loadHome="loadHome"
-                  v-on:loadProducts="loadProducts"
-                  v-on:loadAboutUs="loadAboutUs"
-                  v-on:loadSignUp="loadSignUp"
                 >
                 </router-view>
 
@@ -69,6 +65,15 @@
 export default {
 
   name: 'App',
+
+  computed: {
+    is_auth: {
+      get: function() {
+        return this.$route.meta.requiresAuth;
+      },
+      set: function() { }
+    }
+  },
 
   methods: {
     loadLogIn: function(){
@@ -103,9 +108,9 @@ export default {
 			localStorage.setItem("username", data.username);
 			localStorage.setItem("token_access", data.token_access);
 			localStorage.setItem("token_refresh", data.token_refresh);
+      //console.log(localStorage.getItem("token_refresh"))
       alert("Autenticación Exitosa");
 			this.loadUserInfo();
-      
     },
 
     completedSignUp: function(data) {
@@ -113,10 +118,13 @@ export default {
 			this.completedLogIn(data);
     },
 
-    toogleFunction: function(isActive){
-        this.isClicked = !isActive
-      return this.isClicked;
-    }
+    logOut: function () {
+			localStorage.clear();
+			alert("Sesión Cerrada");
+      this.loadLogIn();
+		},
+
+
 
   },
 

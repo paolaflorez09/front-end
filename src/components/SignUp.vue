@@ -4,7 +4,7 @@
 
   <div class="row justify-content-center">
     <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-      <form class="mx-1 mx-md-4">
+      <form v-on:submit.prevent="processSignUp" class="mx-1 mx-md-4">
         <div class="d-flex flex-row align-items-center mb-4">
           <i class="fas fa-user fa-lg me-3 fa-fw"></i>
           <div class="form-outline flex-fill mb-0">
@@ -46,7 +46,7 @@
         </div>
 
         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-          <button v-on:click="processSignUp()" type="button" class="btn btn-primary btn-lg">Registrarse</button>
+          <button type="submit" class="btn btn-primary btn-lg">Registrarse</button>
         </div>
 
       </form>

@@ -11,7 +11,7 @@
             alt="Sample image">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form>
+            <form v-on:submit.prevent="processLogInUser">
             <div class="divider d-flex align-items-center my-4">
                 <p class="text-center fw-bold mx-3 mb-0">Ingresar</p>
             </div>
@@ -33,8 +33,8 @@
             </div>
 
             <div class="text-center text-lg-start mt-4 pt-2">
-                <button type="button" class="btn btn-primary btn-lg"
-                 v-on:click="processLogInUser()"
+                <button type="submit" class="btn btn-primary btn-lg"
+                 
                 style="padding-left: 2.5rem; padding-right: 2.5rem;" >Ingresar</button>
                 <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes una cuenta? <a href="#!"
                     class="link-danger">Rgístrate</a></p>
@@ -67,30 +67,30 @@ export default {
         processLogInUser: async function() {
         await this.$apollo
             .mutate({
-            mutation: gql`
-                mutation($credentials: CredentialsInput!) {
-                logIn(credentials: $credentials) {
-                    refresh
-                    access
-                }
-                }
-            `,
-            variables: {
-                credentials: this.user,
-            },
-            })
-            .then((result) => {
-            let dataLogIn = {
-                username: this.user.username,
-                token_access: result.data.logIn.access,
-                token_refresh: result.data.logIn.refresh,
-            };
+                mutation: gql`
+                    mutation($credentials: CredentialsInput!) {
+                    logIn(credentials: $credentials) {
+                        refresh
+                        access
+                    }
+                    }
+                `,
+                variables: {
+                    credentials: this.user,
+                },
+                })
+                .then((result) => {
+                let dataLogIn = {
+                    username: this.user.username,
+                    token_access: result.data.logIn.access,
+                    token_refresh: result.data.logIn.refresh,
+                };
 
-            this.$emit("completedLogIn", dataLogIn);
-            })
-            .catch((error) => {
-            alert("ERROR 401: Credenciales Incorrectas.");
-            });
+                this.$emit("completedLogIn", dataLogIn);
+                })
+                .catch((error) => {
+                alert("ERROR 401: Credenciales Incorrectas.");
+                });
         },
     }
 

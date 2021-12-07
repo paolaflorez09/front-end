@@ -15,52 +15,57 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    meta: { requiresAuth: false }
   },
 
   {
     path: '/About',
     name: 'about',
-    component: About
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    component: About,
+    meta: { requiresAuth: false }
   },
   
   {
     path: '/logIn',
     name: "logIn",
-    component: LogIn 
+    component: LogIn,
+    meta: { requiresAuth: false }
   },
 
   {
     path: '/SignUp',
     name: "signUp",
-    component: SignUp 
+    component: SignUp,
+    meta: { requiresAuth: false }
   },
 
   {
     path: '/products',
     name: "products",
-    component: products 
+    component: products,
+    meta: { requiresAuth: false }
   },
 
   {
     path: '/UserProducts',
     name: "UserProducts",
-    component: UserProducts
+    component: UserProducts,
+    meta: { requiresAuth: true }
   },
 
   {
     path: '/UserInfo',
     name: "UserInfo",
-    component: UserInfo
+    component: UserInfo,
+    meta: { requiresAuth: true }
   },
 
   {
     path: '/AdminProducts',
     name: "AdminProducts",
-    component: AdminProducts
+    component: AdminProducts,
+    meta: { requiresAuth: true }
   }
 
 ];
@@ -75,4 +80,43 @@ const apolloClient = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-export default router
+async function isAuth() {
+  if (localStorage.getItem("token_access") === null || localStorage.getItem("token_refresh") === null) {
+      return false;
+  }
+
+  try {
+      var result = await apolloClient.mutate({
+          mutation: gql `
+            mutation RefreshToken($refresh: String!) {
+              refreshToken(refresh: $refresh) {
+                access
+              }
+            }
+          `,
+          variables: {
+              refresh: localStorage.getItem("token_refresh"),
+          },
+      })
+      localStorage.setItem("token_access", result.data.refreshToken.access);
+      return true;
+
+  } catch {
+      localStorage.clear();
+      alert("Su sesión expiró, por favor vuelva a iniciar sesión");
+      return false;
+  }
+}
+
+
+router.beforeEach(async(to, from) => {
+  var is_auth = await isAuth();
+
+  if (is_auth == to.meta.requiresAuth) 
+      return true
+
+  if (is_auth) return { name: "UserInfo" };
+  return { name: "logIn" };
+})
+
+export default router;
