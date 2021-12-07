@@ -7,6 +7,8 @@ import LogIn from './components/LogIn.vue'
 import products from './components/Products.vue'
 import About from './components/About.vue'
 import SignUp from './components/SignUp.vue'
+import AdminUsers from './components/AdminUsers.vue'
+import User from './components/User.vue'
 
 const routes = [
   {
@@ -23,21 +25,37 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
   },
+  
   {
     path: '/logIn',
     name: "logIn",
     component: LogIn 
-},
-{
-  path: '/SignUp',
-  name: "signUp",
-  component: SignUp 
-},
+  },
+
+  {
+    path: '/SignUp',
+    name: "signUp",
+    component: SignUp 
+  },
+
   {
     path: '/products',
     name: "products",
     component: products 
+  },
+
+  {
+    path: '/User',
+    name: "User",
+    component: User 
+  },
+
+  {
+    path: '/AdminUsers',
+    name: "AdminUsers",
+    component: AdminUsers 
   }
+
 ];
 
 const router = createRouter({

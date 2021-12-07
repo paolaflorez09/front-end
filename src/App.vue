@@ -1,69 +1,55 @@
 <template>
+
 <div id="app" class="app">
 
     <header class="header">
         <nav>
           <div>
+            <button v-on:click="toogleFunction(isClicked)">NavBar</button>
             <button v-on:click="loadHome">Guarderia</button>
             <button v-on:click="loadProducts">Productos</button>
             <button v-on:click="loadAboutUs">About Us</button>
           </div>
           <div>
             <button v-on:click="loadLogIn">Login</button>
-            <button v-on:click="loadAboutUs">Registrarse</button>
+            <button v-on:click="loadSignUp">Registrarse</button>
           </div>
         </nav>   
     </header>
-    <!-- <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar scroll</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Link
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Link</a>
-              </li>
-            </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
-    </header> -->
 
-    <div class = "main-component">
-      <router-view
-        v-on:completedLogin="completedLogin"
-        v-on:completedSignUp="compltedSignUp"
-        v-on:logOut="logOut"
-        v-on:loadHome="loadHome"
-        v-on:loadProducts="loadProducts"
-        v-on:loadAboutUs="loadAboutUs"
-        v-on:loadSignUp="loadSignUp"
-      >
-      </router-view>
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div v-if="isClicked" class="col-auto px-0">
+                <div id="sidebar" class="collapse collapse-horizontal show border-end">
+                    <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
+                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-bootstrap"></i> <span>Item</span> </a>
+                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-film"></i> <span>Item</span></a>
+                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-heart"></i> <span>Item</span></a>
+                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-bricks"></i> <span>Item</span></a>
+                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-clock"></i> <span>Item</span></a>
+                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-archive"></i> <span>Item</span></a>
+                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-gear"></i> <span>Item</span></a>
+                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-calendar"></i> <span>Item</span></a>
+                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-envelope"></i> <span>Item</span></a>
+                    </div>
+                </div>
+            </div>
+            <main class="col ps-md-2 pt-2">
+              <div class = "main-component">
+                <router-view
+                  v-on:completedLogin="completedLogin"
+                  v-on:completedSignUp="compltedSignUp"
+                  v-on:logOut="logOut"
+                  v-on:loadHome="loadHome"
+                  v-on:loadProducts="loadProducts"
+                  v-on:loadAboutUs="loadAboutUs"
+                  v-on:loadSignUp="loadSignUp"
+                >
+                </router-view>
+
+              </div>
+            </main>
+        </div>
     </div>
 
     <footer id="footer" class="footer">
@@ -73,20 +59,17 @@
           <p>Sobre Nosotros</p>
       </div>
     </footer>
-    
-    <!-- <footer class="bg-light text-center text-lg-start">
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2020 Copyright:
-        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-      </div>
-    </footer> -->
 
   </div>
-
 </template>
 
 <script>
+
+
 export default {
+
+
+
   name: 'App',
 
   methods: {
@@ -108,8 +91,23 @@ export default {
 
     loadAboutUs: function() {
       this.$router.push({ name: "about" });
+    },
+
+    loadAdminUsers: function() {
+      this.$router.push({ name: "AdminUsers" });
+    },
+
+    toogleFunction: function(isActive){
+        this.isClicked = !isActive
+      return this.isClicked;
     }
 
+  },
+
+  data(){
+      return {
+          isClicked: true
+      }
   }
 
 
@@ -170,7 +168,6 @@ export default {
   }
 
   .main-component{
-   
     margin: 0%;
     padding: 0%;
 
@@ -215,5 +212,25 @@ export default {
   html{
     background-color: white;
   }
+
+#sidebar-nav {
+    width: 200px;
+}
+
+.col-auto{
+    color: white;
+    background-color: rgb(85, 182, 85);
+    float: left;
+    /*position: fixed;*/
+    z-index: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 0.5em;
+
+    display: flex;
+    flex-direction: column;
+}
+
 
 </style>
