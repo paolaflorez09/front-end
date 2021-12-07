@@ -18,10 +18,10 @@
 
             <!-- Email input -->
             <div class="form-outline mb-4">
-                <input type="email" id="form3Example3" class="form-control form-control-lg"
+                <input type="text" id="form3Example3" class="form-control form-control-lg"
                 v-model="user.username"
-                placeholder="Ingresa un email válido" />
-                <label class="form-label" for="form3Example3">Email </label>
+                placeholder="Ingresa un username" />
+                <label class="form-label" for="form3Example3">Username </label>
             </div>
 
             <!-- Password input -->
@@ -34,6 +34,7 @@
 
             <div class="text-center text-lg-start mt-4 pt-2">
                 <button type="button" class="btn btn-primary btn-lg"
+                 v-on:click="processLogInUser()"
                 style="padding-left: 2.5rem; padding-right: 2.5rem;" >Ingresar</button>
                 <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes una cuenta? <a href="#!"
                     class="link-danger">Rgístrate</a></p>
@@ -48,11 +49,10 @@
 </template>
 
 <script>
+import gql from "graphql-tag";
 
 export default {
-
-    name: "LogIn",
-
+    name: "SignUp",
 
     data: function(){
         return {
@@ -63,14 +63,42 @@ export default {
         }
     },
 
+    methods: {
+        processLogInUser: async function() {
+        await this.$apollo
+            .mutate({
+            mutation: gql`
+                mutation($credentials: CredentialsInput!) {
+                logIn(credentials: $credentials) {
+                    refresh
+                    access
+                }
+                }
+            `,
+            variables: {
+                credentials: this.user,
+            },
+            })
+            .then((result) => {
+            let dataLogIn = {
+                username: this.user.username,
+                token_access: result.data.logIn.access,
+                token_refresh: result.data.logIn.refresh,
+            };
+
+            this.$emit("completedLogIn", dataLogIn);
+            })
+            .catch((error) => {
+            alert("ERROR 401: Credenciales Incorrectas.");
+            });
+        },
+    }
+
 }
 </script>
 
 
 <style>
-
-
-
 .divider:after,
 .divider:before {
   content: "";

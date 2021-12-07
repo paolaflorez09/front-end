@@ -7,8 +7,9 @@ import LogIn from './components/LogIn.vue'
 import products from './components/Products.vue'
 import About from './components/About.vue'
 import SignUp from './components/SignUp.vue'
-import AdminUsers from './components/AdminUsers.vue'
-import User from './components/User.vue'
+import UserInfo from './components/UserInfo.vue'
+import UserProducts from './components/UserProducts.vue'
+import AdminProducts from './components/AdminProducts.vue'
 
 const routes = [
   {
@@ -45,15 +46,21 @@ const routes = [
   },
 
   {
-    path: '/User',
-    name: "User",
-    component: User 
+    path: '/UserProducts',
+    name: "UserProducts",
+    component: UserProducts
   },
 
   {
-    path: '/AdminUsers',
-    name: "AdminUsers",
-    component: AdminUsers 
+    path: '/UserInfo',
+    name: "UserInfo",
+    component: UserInfo
+  },
+
+  {
+    path: '/AdminProducts',
+    name: "AdminProducts",
+    component: AdminProducts
   }
 
 ];

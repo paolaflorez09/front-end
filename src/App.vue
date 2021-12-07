@@ -37,8 +37,8 @@
             <main class="col ps-md-2 pt-2">
               <div class = "main-component">
                 <router-view
-                  v-on:completedLogin="completedLogin"
-                  v-on:completedSignUp="compltedSignUp"
+                  v-on:completedLogIn="completedLogIn"
+                  v-on:completedSignUp="completedSignUp"
                   v-on:logOut="logOut"
                   v-on:loadHome="loadHome"
                   v-on:loadProducts="loadProducts"
@@ -68,8 +68,6 @@
 
 export default {
 
-
-
   name: 'App',
 
   methods: {
@@ -95,6 +93,24 @@ export default {
 
     loadAdminUsers: function() {
       this.$router.push({ name: "AdminUsers" });
+    },
+
+    loadUserInfo: function() {
+      this.$router.push({ name: "UserInfo" });
+    },
+
+    completedLogIn: function(data) {
+			localStorage.setItem("username", data.username);
+			localStorage.setItem("token_access", data.token_access);
+			localStorage.setItem("token_refresh", data.token_refresh);
+      alert("Autenticación Exitosa");
+			this.loadUserInfo();
+      
+    },
+
+    completedSignUp: function(data) {
+			alert("Registro Exitoso");
+			this.completedLogIn(data);
     },
 
     toogleFunction: function(isActive){

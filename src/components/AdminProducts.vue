@@ -1,20 +1,6 @@
 <template>
 
-     <!--<div class="greetings">
-        <h1>¡Bienvenido  <span> {{username}} </span>!</h1>
-    </div>
-    <div v-show="1 > 2">
-        <h2>Nooooo</h2>
-    </div>-->
     <div class="container-grid">
-        <!--<div class="sub-menu">
-            <ul>
-                <li><a class="btn btn-dark" href="#">Usuarios</a></li>
-                <li><a class="btn btn-dark" href="#">Centros</a></li>
-                <li><a class="btn btn-dark" href="#">Solicitudes</a></li>
-            </ul>
-        </div>-->
-
         <div class="container" >
             <table class="table table-hover" >
             <thead>
@@ -47,7 +33,6 @@
             </table>
         </div>
     </div>
-
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog">
@@ -129,7 +114,7 @@
 
 
 export default {
-    name: "AdminUsers",
+    name: "AdminProducts",
 
     data: function(){
         return {
