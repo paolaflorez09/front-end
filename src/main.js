@@ -1,9 +1,10 @@
 import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
 import { createApolloProvider } from '@vue/apollo-option'
 import { setContext } from 'apollo-link-context'
-import App from './App.vue'
-import router from './router'
+
 
 
 const httpLink = createHttpLink({
@@ -14,7 +15,7 @@ const authLink = setContext((_, { headers }) => {
     return {
         headers: {
             ...headers,
-            "Authorization": localStorage.getItem("token_acces") || ""
+            "Authorization": localStorage.getItem("token_access") || ""
         }
     }
 })

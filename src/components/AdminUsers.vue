@@ -1,20 +1,7 @@
 <template>
 
-     <!--<div class="greetings">
-        <h1>¡Bienvenido  <span> {{username}} </span>!</h1>
-    </div>
-    <div v-show="1 > 2">
-        <h2>Nooooo</h2>
-    </div>-->
     <div class="container-grid">
-        <!--<div class="sub-menu">
-            <ul>
-                <li><a class="btn btn-dark" href="#">Usuarios</a></li>
-                <li><a class="btn btn-dark" href="#">Centros</a></li>
-                <li><a class="btn btn-dark" href="#">Solicitudes</a></li>
-            </ul>
-        </div>-->
-
+        <h2>Usuarios</h2>
         <div class="container" >
             <table class="table table-hover" >
             <thead>
@@ -24,18 +11,17 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Email</th>
                     <th scope="col">Teléfono</th>
-                    <th scope="col">isAdmin</th>
+                    <th scope="col">IsAdmin?</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="solicitud in solicitudes" v-bind:key="solicitud">
-                    <th scope="row">{{solicitud.idSolicitud}}</th>
-                    <td>{{solicitud.cedula}}</td>
-                    <td>{{solicitud.nombreCliente}}</td>
-                    <td>{{solicitud.ciudad}}</td>
-                    <td>{{solicitud.FinalizedState}}</td>
-                    <td>{{solicitud.Centro.idCentro}}</td>
-                    <td>{{solicitud.Mensaje}}</td>
+                <tr v-for="userOne in users" v-bind:key="userOne.id">
+                    <th scope="row">{{userOne.id}}</th>
+                    <td>{{userOne.username}}</td>
+                    <td>{{userOne.name}}</td>
+                    <td>{{userOne.email}}</td>
+                    <td>{{userOne.phone}}</td>
+                    <td>{{userOne.admin}}</td>
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" data-bs-whatever="@mdo">Modificar</button>
                     </td>
@@ -47,7 +33,6 @@
             </table>
         </div>
     </div>
-
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog">
@@ -126,15 +111,15 @@
 
 
 <script>   
-
+import gql from "graphql-tag";
 
 export default {
     name: "AdminUsers",
 
     data: function(){
         return {
-            solicitud: [],
-            solicitudes: [],
+            userOne: [],
+            users: [],
             user: {
                 cedula: "",
                 nombreCliente: "",
@@ -149,8 +134,30 @@ export default {
     },
 
     methods: {
-        getSolicitudesList: async function(){
+        getProductsList: async function(){
+            await this.$apollo
+            .query({
+            query: gql`
+                query UserList {
+                    userList {
+                        id
+                        username
+                        name
+                        email
+                        phone
+                        admin
+                    }
+                }
+                `,
+                    
+            })
+            .then((result) => {
+                this.users = result.data.userList;
 
+            })
+            .catch((error) => {
+            alert("ERROR: Fallo geUserData");
+            });
         },
 
         deleteSoli: function(id) {
@@ -162,7 +169,7 @@ export default {
         }
     },
     created: async function(){
-        this.getSolicitudesList();
+        this.getProductsList();
     }
 }
 

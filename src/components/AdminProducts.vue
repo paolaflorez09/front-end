@@ -1,45 +1,26 @@
 <template>
 
-     <!--<div class="greetings">
-        <h1>¡Bienvenido  <span> {{username}} </span>!</h1>
-    </div>
-    <div v-show="1 > 2">
-        <h2>Nooooo</h2>
-    </div>-->
     <div class="container-grid">
-        <!--<div class="sub-menu">
-            <ul>
-                <li><a class="btn btn-dark" href="#">Usuarios</a></li>
-                <li><a class="btn btn-dark" href="#">Centros</a></li>
-                <li><a class="btn btn-dark" href="#">Solicitudes</a></li>
-            </ul>
-        </div>-->
-
+        <h2>Productos</h2>
         <div class="container" >
             <table class="table table-hover" >
             <thead>
                 <tr>
                     <th scope="col">id</th>
-                    <th scope="col">Username</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Teléfono</th>
-                    <th scope="col">isAdmin</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">isService</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="solicitud in solicitudes" v-bind:key="solicitud">
-                    <th scope="row">{{solicitud.idSolicitud}}</th>
-                    <td>{{solicitud.cedula}}</td>
-                    <td>{{solicitud.nombreCliente}}</td>
-                    <td>{{solicitud.ciudad}}</td>
-                    <td>{{solicitud.FinalizedState}}</td>
-                    <td>{{solicitud.Centro.idCentro}}</td>
-                    <td>{{solicitud.Mensaje}}</td>
+                <tr v-for="product in products" v-bind:key="product.id">
+                    <th scope="row">{{product.id}}</th>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.isService}}</td>
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" data-bs-whatever="@mdo">Modificar</button>
-                    </td>
-                    <td>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Borrar</button>
                     </td>
                 </tr>
@@ -47,7 +28,6 @@
             </table>
         </div>
     </div>
-
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog">
@@ -60,7 +40,7 @@
                 <form>
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Id:</label>
-                    <input type="text" class="form-control" id="recipient-name" v-model="idSoliEliminar">
+                    <input type="text" class="form-control" id="recipient-name" >
                 </div>
                 <!-- <div class="mb-3">
                     <label for="message-text" class="col-form-label">Message:</label>
@@ -69,7 +49,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" v-on:click="deleteSoli(idSoliEliminar)">Borrar</button>
+                <button type="button" class="btn btn-danger" >Borrar</button>
             </div>
             </div>
         </div>
@@ -116,7 +96,7 @@
                     </div>
                 </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" v-on:click="ModiSoli(idSoliModi)">Modificar</button>
+                <button type="button" class="btn btn-primary" >Modificar</button>
             </div>
             </div>
         </div>
@@ -126,15 +106,15 @@
 
 
 <script>   
-
+import gql from "graphql-tag";
 
 export default {
-    name: "AdminUsers",
+    name: "AdminProducts",
 
     data: function(){
         return {
-            solicitud: [],
-            solicitudes: [],
+            product: [],
+            products: [],
             user: {
                 cedula: "",
                 nombreCliente: "",
@@ -149,20 +129,34 @@ export default {
     },
 
     methods: {
-        getSolicitudesList: async function(){
-
+        getProductsList: async function(){
+            await this.$apollo
+            .query({
+            query: gql`
+                query Products {
+                    products {
+                        id
+                        name
+                        price
+                        isService
+                    }
+                }
+                `,
+                    
+            })
+            .then((result) => {
+                this.products = result.data.products;
+            })
+            .catch((error) => {
+            alert("ERROR: Fallo geUserData");
+            });
         },
 
-        deleteSoli: function(id) {
 
-        },
 
-        ModiSoli: function(id) {
-
-        }
     },
     created: async function(){
-        this.getSolicitudesList();
+        this.getProductsList();
     }
 }
 

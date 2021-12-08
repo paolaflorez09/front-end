@@ -5,45 +5,37 @@
     <header class="header">
         <nav>
           <div>
-            <button v-on:click="toogleFunction(isClicked)">NavBar</button>
             <button v-on:click="loadHome">Guarderia</button>
             <button v-on:click="loadProducts">Productos</button>
             <button v-on:click="loadAboutUs">About Us</button>
           </div>
           <div>
-            <button v-on:click="loadLogIn">Login</button>
-            <button v-on:click="loadSignUp">Registrarse</button>
+            <button v-if="!is_auth" v-on:click="loadLogIn">Login</button>
+            <button v-if="!is_auth" v-on:click="loadSignUp">Registrarse</button>
+            <button v-if="is_auth" v-on:click="logOut"> Cerrar Sesión </button>
           </div>
         </nav>   
     </header>
 
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <div v-if="isClicked" class="col-auto px-0">
+            <div v-if="is_auth" class="col-auto px-0">
                 <div id="sidebar" class="collapse collapse-horizontal show border-end">
                     <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-bootstrap"></i> <span>Item</span> </a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-film"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-heart"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-bricks"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-clock"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-archive"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-gear"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-calendar"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-envelope"></i> <span>Item</span></a>
+                         <h2><span>Usuario</span></h2>
+                        <button v-on:click="loadUserInfo">Mi info</button> 
+                        <button v-on:click="loadAdminProducts">Productos</button>
+                        <button v-on:click="loadAdminUsers">Usuarios</button>
                     </div>
                 </div>
             </div>
             <main class="col ps-md-2 pt-2">
               <div class = "main-component">
                 <router-view
-                  v-on:completedLogin="completedLogin"
-                  v-on:completedSignUp="compltedSignUp"
+                  v-on:completedLogIn="completedLogIn"
+                  v-on:completedSignUp="completedSignUp"
                   v-on:logOut="logOut"
-                  v-on:loadHome="loadHome"
-                  v-on:loadProducts="loadProducts"
-                  v-on:loadAboutUs="loadAboutUs"
-                  v-on:loadSignUp="loadSignUp"
+                  v-on:completedGetUserAdmin="completedGetUserAdmin"
                 >
                 </router-view>
 
@@ -68,9 +60,21 @@
 
 export default {
 
-
-
   name: 'App',
+
+    data: function() {
+        return {
+        };
+    },
+
+  computed: {
+    is_auth: {
+      get: function() {
+        return this.$route.meta.requiresAuth;
+      },
+      set: function() { }
+    }
+  },
 
   methods: {
     loadLogIn: function(){
@@ -93,14 +97,43 @@ export default {
       this.$router.push({ name: "about" });
     },
 
+    loadAdminProducts: function() {
+      this.$router.push({ name: "AdminProducts" });
+    },
+
     loadAdminUsers: function() {
       this.$router.push({ name: "AdminUsers" });
     },
 
-    toogleFunction: function(isActive){
-        this.isClicked = !isActive
-      return this.isClicked;
-    }
+    loadUserInfo: function() {
+      this.$router.push({ name: "UserInfo" });
+    },
+
+    completedLogIn: function(data) {
+			localStorage.setItem("username", data.username);
+			localStorage.setItem("token_access", data.token_access);
+			localStorage.setItem("token_refresh", data.token_refresh);
+      //console.log(localStorage.getItem("token_refresh"))
+      alert("Autenticación Exitosa");
+			this.loadUserInfo();
+    },
+
+    completedSignUp: function(data) {
+			alert("Registro Exitoso");
+			this.completedLogIn(data);
+    },
+
+    completedGetUserAdmin: function(data) {
+      console.log("cool")
+    },
+
+    logOut: function () {
+			localStorage.clear();
+			alert("Sesión Cerrada");
+      this.loadLogIn();
+		},
+
+
 
   },
 
