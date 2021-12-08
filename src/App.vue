@@ -22,10 +22,10 @@
             <div v-if="is_auth" class="col-auto px-0">
                 <div id="sidebar" class="collapse collapse-horizontal show border-end">
                     <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
-                         <h2><span>Usuario</span></h2>
+                         <h2><span>{{username}}</span></h2>
                         <button v-on:click="loadUserInfo">Mi info</button> 
-                        <button v-on:click="loadAdminProducts">Productos</button>
-                        <button v-on:click="loadAdminUsers">Usuarios</button>
+                        <button v-if="is_admin" v-on:click="loadAdminProducts">Productos</button>
+                        <button v-if="is_admin" v-on:click="loadAdminUsers">Usuarios</button>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-
+import gql from "graphql-tag";
 
 export default {
 
@@ -73,6 +73,14 @@ export default {
         return this.$route.meta.requiresAuth;
       },
       set: function() { }
+    },
+
+  },
+
+  data: async function(){
+    return {
+      is_admin: false,
+      username: ""
     }
   },
 
@@ -109,12 +117,17 @@ export default {
       this.$router.push({ name: "UserInfo" });
     },
 
-    completedLogIn: function(data) {
-			localStorage.setItem("username", data.username);
+    completedLogIn: async function(data) {
+      localStorage.clear();
 			localStorage.setItem("token_access", data.token_access);
 			localStorage.setItem("token_refresh", data.token_refresh);
       //console.log(localStorage.getItem("token_refresh"))
+      await this.getUserData();
       alert("Autenticación Exitosa");
+      console.log(localStorage.getItem("is_admin"));
+      this.username = localStorage.getItem("username");
+      this.is_admin = localStorage.getItem("is_admin");
+      console.log(this.is_admin);
 			this.loadUserInfo();
     },
 
@@ -123,26 +136,50 @@ export default {
 			this.completedLogIn(data);
     },
 
-    completedGetUserAdmin: function(data) {
-      console.log("cool")
-    },
-
     logOut: function () {
 			localStorage.clear();
 			alert("Sesión Cerrada");
       this.loadLogIn();
+      //location.reload();
 		},
 
-
+    getUserData: async function(){
+        await this.$apollo
+        .query({
+        query: gql`
+            query UserDetailById {
+                userDetailById {
+                    id
+                    username
+                    name
+                    email
+                    phone
+                    admin
+                }
+            }
+            `,
+                
+        })
+        .then((result) => {
+            let dataGet = {
+                    id: result.data.userDetailById.id,
+                    username: result.data.userDetailById.username,
+                    name: result.data.userDetailById.name,
+                    email: result.data.userDetailById.email,
+                    phone: result.data.userDetailById.phone,
+                    admin: result.data.userDetailById.admin
+            };
+            localStorage.setItem("is_admin", dataGet.admin);
+            this.is_admin = dataGet.admin;
+            localStorage.setItem("username", dataGet.username);
+        })
+        .catch((error) => {
+            console.log(error)
+          alert("ERROR: Fallo geUserData");
+        });
+    }
 
   },
-
-  data(){
-      return {
-          isClicked: true
-      }
-  }
-
 
 }
 </script>

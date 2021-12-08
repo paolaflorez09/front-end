@@ -93,44 +93,45 @@ export default {
 
   methods: {
 
-    getUserData: async function(){
-        await this.$apollo
-        .query({
-        query: gql`
-            query UserDetailById {
-                userDetailById {
-                    id
-                    username
-                    name
-                    email
-                    phone
-                    admin
-                }
-            }
-            `,
+     getUserData: async function(){
+         
+         await this.$apollo
+         .query({
+         query: gql`
+             query UserDetailById {
+                 userDetailById {
+                     id
+                     username
+                     name
+                     email
+                     phone
+                     admin
+                 }
+             }
+             `,
                 
-        })
-        .then((result) => {
-            let dataGet = {
-                    id: result.data.userDetailById.id,
-                    username: result.data.userDetailById.username,
-                    name: result.data.userDetailById.name,
-                    email: result.data.userDetailById.email,
-                    phone: result.data.userDetailById.phone,
-                    admin: result.data.userDetailById.admin
-            };
-            this.$emit("completedGetUserAdmin", dataGet);
-            this.userInfo = dataGet;
-        })
-        .catch((error) => {
-            console.log(error)
-          alert("ERROR: Fallo geUserData");
-        });
-    },
+         })
+         .then((result) => {
+             let dataGet = {
+                     id: result.data.userDetailById.id,
+                     username: result.data.userDetailById.username,
+                     name: result.data.userDetailById.name,
+                     email: result.data.userDetailById.email,
+                     phone: result.data.userDetailById.phone,
+                     admin: result.data.userDetailById.admin
+             };
+             this.$emit("completedGetUserAdmin", dataGet);
+             this.userInfo = dataGet;
+         })
+         .catch((error) => {
+             console.log(error)
+           alert("ERROR: Fallo geUserData");
+         });
+     },
 
   },
   
-  created: async function(){
+  mounted: async function(){
       this.getUserData();
   },
 

@@ -25,9 +25,7 @@
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" data-bs-whatever="@mdo">Modificar</button>
                     </td>
-                    <td>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Borrar</button>
-                    </td>
+
                 </tr>
             </tbody>
             </table>
@@ -67,39 +65,52 @@
                 <h5 class="modal-title" id="exampleModalLabel">Escribe datos para modificar</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-                <div class="signUp_user">
-                    <div class="container_signUp_user">
+
+                    
                         <br>
-                        <form v-on:submit.prevent="processModificarSoli" >
+                        <form v-on:submit.prevent="processSignUp" class="mx-1 mx-md-4">
+                            <br>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input v-model="user.username" type="text" id="form3Example1c" class="form-control" />
+                                <label class="form-label" for="form3Example1c">Tu nombre de Usuario</label>
+                            </div>
+                            </div>
 
-                                <input type="number" v-model="idSoliModi" placeholder="id">
-                                <br>
-                                
-                                <input type="number" v-model="user.cedula" placeholder="Cédula ">
-                                <br>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input v-model="user.password" type="password" id="form3Example4c" class="form-control" />
+                                <label class="form-label" for="form3Example4c">Tu contraseña</label>
+                            </div>
+                            </div>
 
-                                <input type="text" v-model="user.nombreCliente" placeholder="Nombre ">
-                                <br>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input v-model="user.name" type="text" id="form3Example4cd" class="form-control" />
+                                <label class="form-label" for="form3Example4cd">Tu nombre</label>
+                            </div>
+                            </div>
 
-                                <input type="text" v-model="user.ciudad" placeholder="Ciudad ">
-                                <br>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input v-model="user.email" type="text" id="form3Example3c" class="form-control" />
+                                <label class="form-label" for="form3Example3c">Your Email</label>
+                            </div>
+                            </div>
 
-                                <select class="dropDownCentroOpciones" v-model="user.FinalizedState">
-                                    <option selected value="true">Finalizado</option>
-                                    <option value="false">No Finalizado</option>
-                                </select>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input v-model="user.phone" type="text" id="form3Example1c" class="form-control" />
+                                <label class="form-label" for="form3Example1c">Tu número telefónico</label>
+                            </div>
+                            </div>
+                        </form>
 
-                                <input type="number" v-model="user.idcentro" placeholder="Centro *">
-                                <br>
-
-                                <textarea type="text-Area" v-model="user.mensaje" placeholder="Modificar Mensaje*">
-                                </textarea>
-                                <br>
-
-                                <!-- <button type="submit">Modificar</button> -->
-                            </form>
-                    </div>
-                </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" v-on:click="ModiSoli(idSoliModi)">Modificar</button>
             </div>

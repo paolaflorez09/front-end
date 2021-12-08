@@ -52,28 +52,36 @@ const routes = [
     path: '/UserProducts',
     name: "UserProducts",
     component: UserProducts,
-    meta: { requiresAuth: true }
+    meta: { 
+      requiresAuth: true
+    }
   },
 
   {
     path: '/UserInfo',
     name: "UserInfo",
     component: UserInfo,
-    meta: { requiresAuth: true }
+    meta: { 
+      requiresAuth: true
+    }
   },
 
   {
     path: '/AdminProducts',
     name: "AdminProducts",
     component: AdminProducts,
-    meta: { requiresAuth: true }
+    meta: { 
+      requiresAuth: true
+    }
   },
 
   {
     path: '/AdminUsers',
     name: "AdminUsers",
     component: AdminUsers,
-    meta: { requiresAuth: true }
+    meta: { 
+      requiresAuth: true
+    }
   }
 
 ];
@@ -116,9 +124,36 @@ async function isAuth() {
   }
 }
 
+//  async function isAdmin() {
+//      try {
+//        var result = await apolloClient.query({
+//            query: gql `
+//              query UserDetailById {
+//                  userDetailById {
+//                      id
+//                      username
+//                      name
+//                      email
+//                      phone
+//                      admin
+//                  }
+//              }
+//            `,
+//        })
+//        localStorage.setItem("is_admin", result.data.userDetailById.admin);
+//        return true;
+
+//      } catch (error){
+//          console.log(error)
+//          alert("Su sesión expiró, por favor vuelva a iniciar sesión");
+//          return false;
+//      }
+//  }
+
 
 router.beforeEach(async(to, from) => {
   var is_auth = await isAuth();
+  //var is_admin = await isAdmin();
 
   if (is_auth == to.meta.requiresAuth)
       return true
