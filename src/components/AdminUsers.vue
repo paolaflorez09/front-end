@@ -1,26 +1,31 @@
 <template>
 
     <div class="container-grid">
-        <h2>Productos</h2>
+        <h2>Usuarios</h2>
         <div class="container" >
             <table class="table table-hover" >
             <thead>
                 <tr>
                     <th scope="col">id</th>
+                    <th scope="col">Username</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">isService</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">IsAdmin?</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="product in products" v-bind:key="product.id">
-                    <th scope="row">{{product.id}}</th>
-                    <td>{{product.name}}</td>
-                    <td>{{product.price}}</td>
-                    <td>{{product.isService}}</td>
+                <tr v-for="userOne in users" v-bind:key="userOne.id">
+                    <th scope="row">{{userOne.id}}</th>
+                    <td>{{userOne.username}}</td>
+                    <td>{{userOne.name}}</td>
+                    <td>{{userOne.email}}</td>
+                    <td>{{userOne.phone}}</td>
+                    <td>{{userOne.admin}}</td>
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" data-bs-whatever="@mdo">Modificar</button>
+                    </td>
+                    <td>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Borrar</button>
                     </td>
                 </tr>
@@ -40,7 +45,7 @@
                 <form>
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Id:</label>
-                    <input type="text" class="form-control" id="recipient-name" >
+                    <input type="text" class="form-control" id="recipient-name" v-model="idSoliEliminar">
                 </div>
                 <!-- <div class="mb-3">
                     <label for="message-text" class="col-form-label">Message:</label>
@@ -49,7 +54,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" >Borrar</button>
+                <button type="button" class="btn btn-danger" v-on:click="deleteSoli(idSoliEliminar)">Borrar</button>
             </div>
             </div>
         </div>
@@ -96,7 +101,7 @@
                     </div>
                 </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" >Modificar</button>
+                <button type="button" class="btn btn-primary" v-on:click="ModiSoli(idSoliModi)">Modificar</button>
             </div>
             </div>
         </div>
@@ -109,12 +114,12 @@
 import gql from "graphql-tag";
 
 export default {
-    name: "AdminProducts",
+    name: "AdminUsers",
 
     data: function(){
         return {
-            product: [],
-            products: [],
+            userOne: [],
+            users: [],
             user: {
                 cedula: "",
                 nombreCliente: "",
@@ -133,27 +138,35 @@ export default {
             await this.$apollo
             .query({
             query: gql`
-                query Products {
-                    products {
+                query UserList {
+                    userList {
                         id
+                        username
                         name
-                        price
-                        isService
+                        email
+                        phone
+                        admin
                     }
                 }
                 `,
                     
             })
             .then((result) => {
-                this.products = result.data.products;
+                this.users = result.data.userList;
+
             })
             .catch((error) => {
             alert("ERROR: Fallo geUserData");
             });
         },
 
+        deleteSoli: function(id) {
 
+        },
 
+        ModiSoli: function(id) {
+
+        }
     },
     created: async function(){
         this.getProductsList();

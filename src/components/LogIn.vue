@@ -1,8 +1,5 @@
 <template>
 
-
-
-
     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Ingresa</p>
     <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -36,7 +33,7 @@
                 <button type="submit" class="btn btn-primary btn-lg"
                  
                 style="padding-left: 2.5rem; padding-right: 2.5rem;" >Ingresar</button>
-                <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes una cuenta? <a href="#!"
+                <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes una cuenta? <a href="/SignUp"
                     class="link-danger">Rgístrate</a></p>
             </div>
 
@@ -59,7 +56,15 @@ export default {
             user: {
                 username:"",
                 password:""
-            }
+            },
+            userInfo: {
+                id: "",
+                username: "",
+                name: "",
+                email: "",
+                phone: "",
+                admin: ""
+            },
         }
     },
 
@@ -80,18 +85,19 @@ export default {
                 },
                 })
                 .then((result) => {
+                
                 let dataLogIn = {
                     username: this.user.username,
                     token_access: result.data.logIn.access,
                     token_refresh: result.data.logIn.refresh,
                 };
-
                 this.$emit("completedLogIn", dataLogIn);
                 })
                 .catch((error) => {
                 alert("ERROR 401: Credenciales Incorrectas.");
                 });
         },
+
     }
 
 }

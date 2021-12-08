@@ -22,15 +22,10 @@
             <div v-if="is_auth" class="col-auto px-0">
                 <div id="sidebar" class="collapse collapse-horizontal show border-end">
                     <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-bootstrap"></i> <span>Item</span> </a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-film"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-heart"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-bricks"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-clock"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-archive"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-gear"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-calendar"></i> <span>Item</span></a>
-                        <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-envelope"></i> <span>Item</span></a>
+                         <h2><span>Usuario</span></h2>
+                        <button v-on:click="loadUserInfo">Mi info</button> 
+                        <button v-on:click="loadAdminProducts">Productos</button>
+                        <button v-on:click="loadAdminUsers">Usuarios</button>
                     </div>
                 </div>
             </div>
@@ -40,6 +35,7 @@
                   v-on:completedLogIn="completedLogIn"
                   v-on:completedSignUp="completedSignUp"
                   v-on:logOut="logOut"
+                  v-on:completedGetUserAdmin="completedGetUserAdmin"
                 >
                 </router-view>
 
@@ -65,6 +61,11 @@
 export default {
 
   name: 'App',
+
+    data: function() {
+        return {
+        };
+    },
 
   computed: {
     is_auth: {
@@ -96,6 +97,10 @@ export default {
       this.$router.push({ name: "about" });
     },
 
+    loadAdminProducts: function() {
+      this.$router.push({ name: "AdminProducts" });
+    },
+
     loadAdminUsers: function() {
       this.$router.push({ name: "AdminUsers" });
     },
@@ -116,6 +121,10 @@ export default {
     completedSignUp: function(data) {
 			alert("Registro Exitoso");
 			this.completedLogIn(data);
+    },
+
+    completedGetUserAdmin: function(data) {
+      console.log("cool")
     },
 
     logOut: function () {

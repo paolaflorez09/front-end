@@ -1,57 +1,64 @@
 <template>
     <br>
+    <h2>Mis Datos</h2>
     <br>
     <div class="container">
 		<div class="main-body">
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-sm-3">
+                        <h6 class="mb-0">ID</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" v-model="userInfo.id" class="form-control" placeholder="0">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3">
                         <h6 class="mb-0">Username</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        <input type="text" class="form-control" value="John Doe">
+                        <input type="text" v-model="userInfo.username" class="form-control" placeholder="J0hnDo3">
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-sm-3">
-                        <h6 class="mb-0">Contraseña</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                        <input type="text" class="form-control" value="john@example.com">
-                    </div>
-                </div>
+
                 <div class="row mb-3">
                     <div class="col-sm-3">
                         <h6 class="mb-0">Nombre</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        <input type="text" class="form-control" value="(239) 816-9029">
+                        <input type="text" v-model="userInfo.name" class="form-control" placeholder="John Doe">
                     </div>
                 </div>
+
                 <div class="row mb-3">
                     <div class="col-sm-3">
                         <h6 class="mb-0">Email</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        <input type="text" class="form-control" value="(320) 380-4539">
+                        <input type="email" v-model="userInfo.email" class="form-control" placeholder="john@example.com">
                     </div>
                 </div>
+
                 <div class="row mb-3">
                     <div class="col-sm-3">
                         <h6 class="mb-0">Telefono</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        <input type="text" class="form-control" value="Bay Area, San Francisco, CA">
+                        <input type="number" v-model="userInfo.phone" class="form-control" placeholder="325 452 4233">
                     </div>
                 </div>
-                <div class="row mb-3">
+
+                <div v-if="userInfo.admin" class="row mb-3">
                     <div class="col-sm-3">
                         <h6 class="mb-0">Estado Admin</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        <input type="text" class="form-control" value="Bay Area, San Francisco, CA">
+                        <input type="text" v-model="userInfo.admin" class="form-control" placeholder="false">
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9 text-secondary">
@@ -66,16 +73,66 @@
 
 
 <script>
+import gql from "graphql-tag";
+
 export default {
   name: 'UserInfo',
 
+    data: function() {
+        return {
+          userInfo: {
+              id: "",
+              username: "",
+              name: "",
+              email: "",
+              phone: "",
+              admin: ""
+          },
+        };
+    },
 
+  methods: {
 
-  data(){
-      return {
-          isClicked: true
-      }
-  }
+    getUserData: async function(){
+        await this.$apollo
+        .query({
+        query: gql`
+            query UserDetailById {
+                userDetailById {
+                    id
+                    username
+                    name
+                    email
+                    phone
+                    admin
+                }
+            }
+            `,
+                
+        })
+        .then((result) => {
+            let dataGet = {
+                    id: result.data.userDetailById.id,
+                    username: result.data.userDetailById.username,
+                    name: result.data.userDetailById.name,
+                    email: result.data.userDetailById.email,
+                    phone: result.data.userDetailById.phone,
+                    admin: result.data.userDetailById.admin
+            };
+            this.$emit("completedGetUserAdmin", dataGet);
+            this.userInfo = dataGet;
+        })
+        .catch((error) => {
+            console.log(error)
+          alert("ERROR: Fallo geUserData");
+        });
+    },
+
+  },
+  
+  created: async function(){
+      this.getUserData();
+  },
 
 }
 </script>

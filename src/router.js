@@ -10,6 +10,7 @@ import SignUp from './components/SignUp.vue'
 import UserInfo from './components/UserInfo.vue'
 import UserProducts from './components/UserProducts.vue'
 import AdminProducts from './components/AdminProducts.vue'
+import AdminUsers from './components/AdminUsers.vue'
 
 const routes = [
   {
@@ -66,6 +67,13 @@ const routes = [
     name: "AdminProducts",
     component: AdminProducts,
     meta: { requiresAuth: true }
+  },
+
+  {
+    path: '/AdminUsers',
+    name: "AdminUsers",
+    component: AdminUsers,
+    meta: { requiresAuth: true }
   }
 
 ];
@@ -112,9 +120,9 @@ async function isAuth() {
 router.beforeEach(async(to, from) => {
   var is_auth = await isAuth();
 
-  if (is_auth == to.meta.requiresAuth) 
+  if (is_auth == to.meta.requiresAuth)
       return true
-
+  
   if (is_auth) return { name: "UserInfo" };
   return { name: "logIn" };
 })

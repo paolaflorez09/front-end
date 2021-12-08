@@ -32,7 +32,7 @@
         <div class="d-flex flex-row align-items-center mb-4">
           <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
           <div class="form-outline flex-fill mb-0">
-            <input v-model="user.email" type="email" id="form3Example3c" class="form-control" />
+            <input v-model="user.email" type="text" id="form3Example3c" class="form-control" />
             <label class="form-label" for="form3Example3c">Your Email</label>
           </div>
         </div>
