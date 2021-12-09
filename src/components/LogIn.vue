@@ -57,14 +57,6 @@ export default {
                 username:"",
                 password:""
             },
-            userInfo: {
-                id: "",
-                username: "",
-                name: "",
-                email: "",
-                phone: "",
-                admin: ""
-            },
         }
     },
 
@@ -87,7 +79,6 @@ export default {
                 .then((result) => {
                 
                 let dataLogIn = {
-                    username: this.user.username,
                     token_access: result.data.logIn.access,
                     token_refresh: result.data.logIn.refresh,
                 };
@@ -98,6 +89,8 @@ export default {
                 });
         },
 
+    },
+    created: async function(){
     }
 
 }

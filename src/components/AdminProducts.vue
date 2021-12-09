@@ -2,6 +2,9 @@
 
     <div class="container-grid">
         <h2>Productos</h2>
+        <div>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#Add" data-bs-whatever="@mdo">Añadir</button>
+        </div>        
         <div class="container" >
             <table class="table table-hover" >
             <thead>
@@ -20,8 +23,8 @@
                     <td>{{product.price}}</td>
                     <td>{{product.isService}}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" data-bs-whatever="@mdo">Modificar</button>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Borrar</button>
+                        <button v-on:click="getModiProductId(product)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modify" data-bs-whatever="@mdo">Modificar</button>
+                        <button v-on:click="getProductId(product.id)" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Delete" data-bs-whatever="@mdo">Borrar</button>
                     </td>
                 </tr>
             </tbody>
@@ -29,7 +32,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal fade" id="Delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
@@ -38,10 +41,11 @@
             </div>
             <div class="modal-body">
                 <form>
-                <div class="mb-3">
+                    <h3> ¿Estas seguro de borrar producto con ID: <span>{{idProductDelete}}</span> ?</h3>
+                <!-- <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">Id:</label>
                     <input type="text" class="form-control" id="recipient-name" >
-                </div>
+                </div> -->
                 <!-- <div class="mb-3">
                     <label for="message-text" class="col-form-label">Message:</label>
                     <textarea class="form-control" id="message-text"></textarea>
@@ -49,54 +53,96 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" >Borrar</button>
+                <button v-on:click="deleteProduct(idProductDelete)" type="button" class="btn btn-danger">Borrar</button>
             </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal fade" id="Add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Escribe datos para modificar</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Escribe Datos del nuevo producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-                <div class="signUp_user">
-                    <div class="container_signUp_user">
-                        <br>
-                        <form v-on:submit.prevent="processModificarSoli" >
+            <div class="modal-body">
 
-                                <input type="number" v-model="idSoliModi" placeholder="id">
-                                <br>
-                                
-                                <input type="number" v-model="user.cedula" placeholder="Cédula ">
-                                <br>
-
-                                <input type="text" v-model="user.nombreCliente" placeholder="Nombre ">
-                                <br>
-
-                                <input type="text" v-model="user.ciudad" placeholder="Ciudad ">
-                                <br>
-
-                                <select class="dropDownCentroOpciones" v-model="user.FinalizedState">
-                                    <option selected value="true">Finalizado</option>
-                                    <option value="false">No Finalizado</option>
-                                </select>
-
-                                <input type="number" v-model="user.idcentro" placeholder="Centro *">
-                                <br>
-
-                                <textarea type="text-Area" v-model="user.mensaje" placeholder="Modificar Mensaje*">
-                                </textarea>
-                                <br>
-
-                                <!-- <button type="submit">Modificar</button> -->
-                            </form>
-                    </div>
+            <!-- form -->      
+            <form class="mx-1 mx-md-4">
+                <br>
+                <div class="d-flex flex-row align-items-center mb-4">
+                <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                <div class="form-outline flex-fill mb-0">
+                    <input v-model="createProduct.name" type="text" id="form3Example1c" class="form-control" />
+                    <label class="form-label" for="form3Example1c">Nombre del Producto</label>
                 </div>
+                </div>
+
+                <div class="d-flex flex-row align-items-center mb-4">
+                <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                <div class="form-outline flex-fill mb-0">
+                    <input v-model="createProduct.price" type="number" id="form3Example4cd" class="form-control" />
+                    <label class="form-label" for="form3Example4cd">Precio del producto</label>
+                </div>
+                </div>
+
+                <div class="d-flex flex-row align-items-center mb-4">
+                <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                <div class="form-outline flex-fill mb-0">
+                    <input v-model="createProduct.isService" type="text" id="form3Example4cda" class="form-control" />
+                    <label class="form-label" for="form3Example4cda">¿Es servicio?</label>
+                </div>
+                </div>
+
+            </form>
+
+            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" >Modificar</button>
+                <button v-on:click="createAnProduct" type="button" class="btn btn-danger" >Crear</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="Modify" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Escribe datos para modificar producto <span>{{idProductModi.id}}</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- form -->      
+            <form class="mx-1 mx-md-4">
+                <br>
+                <div class="d-flex flex-row align-items-center mb-4">
+                <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                <div class="form-outline flex-fill mb-0">
+                    <input v-model="modifyProduct.name" type="text" id="form3Example1ca" class="form-control" :placeholder="[[idProductModi.name]]" />
+                    <label class="form-label" for="form3Example1c">Nombre del Producto</label>
+                </div>
+                </div>
+
+                <div class="d-flex flex-row align-items-center mb-4">
+                <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                <div class="form-outline flex-fill mb-0">
+                    <input v-model="modifyProduct.price" type="number" id="form3Example4c" class="form-control" :placeholder="[[idProductModi.price]]" />
+                    <label class="form-label" for="form3Example4c">Precio del producto</label>
+                </div>
+                </div>
+
+                <div class="d-flex flex-row align-items-center mb-4">
+                <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                <div class="form-outline flex-fill mb-0">
+                    <input v-model="modifyProduct.isService" type="text" id="form3Example4cd" class="form-control" :placeholder="[[idProductModi.isService]]" />
+                    <label class="form-label" for="form3Example4cd">¿Es servicio?</label>
+                </div>
+                </div>
+
+            </form>
+
+            <div class="modal-footer">
+                <button v-on:click="modifyAnProduct" type="submit" class="btn btn-primary" >Modificar</button>
             </div>
             </div>
         </div>
@@ -115,16 +161,18 @@ export default {
         return {
             product: [],
             products: [],
-            user: {
-                cedula: "",
-                nombreCliente: "",
-                ciudad: "",
-                FinalizedState: "",
-                idcentro: "",
-                mensaje: ""
+            createProduct: {
+                name: "",
+                price: 0,
+                isService: false,
             },
-            idSoliEliminar: "",
-            idSoliModi: ""
+            modifyProduct: {
+                name: "",
+                price: "",
+                isService: false,
+            },
+            idProductDelete: "",
+            idProductModi: ""
         }
     },
 
@@ -152,6 +200,98 @@ export default {
             });
         },
 
+        getProductId: function(productID){
+            this.idProductDelete = productID;
+            console.log(this.idProductDelete);
+        },
+
+        getModiProductId: function(product){
+            this.idProductModi = product;
+            console.log(this.idProductModi);
+        },
+
+        createAnProduct: async function(){
+            await this.$apollo
+                .mutate({
+                mutation: gql`
+                mutation CreateProduct($inputProduct: inProduct!) {
+                    createProduct(inputProduct: $inputProduct) {
+                        id
+                        name
+                        price
+                        isService
+                    }
+                }
+                `,
+                variables:{
+                    inputProduct: this.createProduct,
+                }
+            })
+            .then((result) => {
+                alert("Producto "+result.data.createProduct.name+" creado");
+                this.getProductsList();
+                this.$forceUpdate();
+                
+            })
+            .catch((error) => {
+            alert("ERROR: Fallo creando producto");
+            });
+
+        },
+
+        modifyAnProduct: async function(){
+            await this.$apollo
+                .mutate({
+                mutation: gql`
+                mutation UpdateProduct($updateProductId: Int!, $product: updateProduct!) {
+                    updateProduct(id: $updateProductId, product: $product) {
+                        id
+                        name
+                        price
+                        isService
+                    }
+                }
+                `,
+                variables:{
+                    updateProductId: this.idProductModi.id,
+                    product: this.modifyProduct
+                }
+            })
+            .then((result) => {
+                alert("Producto "+result.data.updateProduct.id+" Modificado");
+                this.getProductsList();
+                this.$forceUpdate();
+                this.modifyProduct = "";
+            })
+            .catch((error) => {
+            alert("ERROR: Fallo creando producto");
+            });
+
+        },     
+
+        deleteProduct: async function(productId){
+            await this.$apollo
+                .mutate({
+                mutation: gql`
+                mutation DeleteProduct($deleteProductId: Int!) {
+                   deleteProduct(id: $deleteProductId)
+                }
+                `,
+                variables:{
+                    deleteProductId: productId
+                }
+            })
+            .then((result) => {
+                this.getProductsList();
+                this.$forceUpdate();
+                alert(result.data.deleteProduct);
+                
+            })
+            .catch((error) => {
+            alert("ERROR: Fallo eliminando producto");
+            });
+
+        }
 
 
     },

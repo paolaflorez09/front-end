@@ -23,40 +23,12 @@
                     <td>{{userOne.phone}}</td>
                     <td>{{userOne.admin}}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" data-bs-whatever="@mdo">Modificar</button>
+                        <button v-on:click="getModiUserId(userOne)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" data-bs-whatever="@mdo">Modificar</button>
                     </td>
-                    <td>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Borrar</button>
-                    </td>
+
                 </tr>
             </tbody>
             </table>
-        </div>
-    </div>
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Escribe id para borrar</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">Id:</label>
-                    <input type="text" class="form-control" id="recipient-name" v-model="idSoliEliminar">
-                </div>
-                <!-- <div class="mb-3">
-                    <label for="message-text" class="col-form-label">Message:</label>
-                    <textarea class="form-control" id="message-text"></textarea>
-                </div> -->
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" v-on:click="deleteSoli(idSoliEliminar)">Borrar</button>
-            </div>
-            </div>
         </div>
     </div>
 
@@ -64,44 +36,66 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Escribe datos para modificar</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Escribe datos para modificar usuario "<span>{{userModi.username}}</span>"</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-                <div class="signUp_user">
-                    <div class="container_signUp_user">
+
+                    
                         <br>
-                        <form v-on:submit.prevent="processModificarSoli" >
+                        <form class="mx-1 mx-md-4">
+                            <br>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input v-model="modifyUser.username" type="text" id="form3Example1c" class="form-control" :placeholder="[[userModi.username]]" />
+                                <label class="form-label" for="form3Example1c">Nombre de Usuario</label>
+                            </div>
+                            </div>
 
-                                <input type="number" v-model="idSoliModi" placeholder="id">
-                                <br>
-                                
-                                <input type="number" v-model="user.cedula" placeholder="Cédula ">
-                                <br>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input v-model="modifyUser.password" type="password" id="form3Example4cd" class="form-control"/>
+                                <label class="form-label" for="form3Example4cad">Contraseña</label>
+                            </div>
+                            </div>
 
-                                <input type="text" v-model="user.nombreCliente" placeholder="Nombre ">
-                                <br>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input v-model="modifyUser.name" type="text" id="form3Example4cd" class="form-control" :placeholder="[[userModi.name]]" />
+                                <label class="form-label" for="form3Example4cd">Nombre</label>
+                            </div>
+                            </div>
 
-                                <input type="text" v-model="user.ciudad" placeholder="Ciudad ">
-                                <br>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input v-model="modifyUser.email" type="text" id="form3Example3c" class="form-control" :placeholder="[[userModi.email]]" />
+                                <label class="form-label" for="form3Example3c">Email</label>
+                            </div>
+                            </div>
 
-                                <select class="dropDownCentroOpciones" v-model="user.FinalizedState">
-                                    <option selected value="true">Finalizado</option>
-                                    <option value="false">No Finalizado</option>
-                                </select>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input v-model="modifyUser.phone" type="text" id="form3Example1c" class="form-control" :placeholder="[[userModi.phone]]" />
+                                <label class="form-label" for="form3Example1c1">Número telefónico</label>
+                            </div>
+                            </div>
 
-                                <input type="number" v-model="user.idcentro" placeholder="Centro *">
-                                <br>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input v-model="modifyUser.admin" type="text" id="form3Example1c" class="form-control" :placeholder="[[userModi.admin]]" />
+                                <label class="form-label" for="form3Example1c4">¿Es admin?</label>
+                            </div>
+                            </div>
 
-                                <textarea type="text-Area" v-model="user.mensaje" placeholder="Modificar Mensaje*">
-                                </textarea>
-                                <br>
+                        </form>
 
-                                <!-- <button type="submit">Modificar</button> -->
-                            </form>
-                    </div>
-                </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" v-on:click="ModiSoli(idSoliModi)">Modificar</button>
+                <button type="button" class="btn btn-primary" v-on:click="modifyAnUser">Modificar</button>
             </div>
             </div>
         </div>
@@ -121,20 +115,27 @@ export default {
             userOne: [],
             users: [],
             user: {
-                cedula: "",
-                nombreCliente: "",
-                ciudad: "",
-                FinalizedState: "",
-                idcentro: "",
-                mensaje: ""
+                id: "",
+                username: "",
+                name: "",
+                email: "",
+                phone: "",
+                admin: "",
             },
-            idSoliEliminar: "",
-            idSoliModi: ""
+            modifyUser: {
+                username: "",
+                password: "",
+                name: "",
+                email: "",
+                phone: "",
+                admin: false,
+            },
+            userModi: ""
         }
     },
 
     methods: {
-        getProductsList: async function(){
+        getUserList: async function(){
             await this.$apollo
             .query({
             query: gql`
@@ -160,16 +161,45 @@ export default {
             });
         },
 
-        deleteSoli: function(id) {
-
+        getModiUserId: function(user){
+            this.userModi = user;
+            console.log(this.userModi);
         },
 
-        ModiSoli: function(id) {
+        modifyAnUser: async function(){
+            await this.$apollo
+                .mutate({
+                mutation: gql`
+                mutation UpdateUser($putUser: SignUpInput!, $userId: Int) {
+                    updateUser(putUser: $putUser, userId: $userId) {
+                        id
+                        username
+                        name
+                        email
+                        phone
+                        admin
+                    }
+                }
+                `,
+                variables:{
+                    userId: this.userModi.id,
+                    putUser: this.modifyUser
+                }
+            })
+            .then((result) => {
+                alert("Producto "+result.data.updateUser.id+" Modificado");
+                this.getUserList();
+                this.$forceUpdate();
+                this.modifyUser = "";
+            })
+            .catch((error) => {
+            alert("ERROR: Fallo modificando producto");
+            });
 
         }
     },
     created: async function(){
-        this.getProductsList();
+        this.getUserList();
     }
 }
 
