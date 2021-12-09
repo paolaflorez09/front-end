@@ -10,44 +10,42 @@
         </div>
         <div class ="catalogue">
             <ul class="card-wrapper">
-                <li class="card">
+                
+                    <li class="card" v-for="product in products" v-bind:key="product.id">
                     <img src='https://upload.wikimedia.org/wikipedia/commons/5/54/Running_in_the_grass_yard%40Affectionate_Pet_Care.JPG' alt=''>
-                    <h3>{{}}</h3>
-                    <p>$ 100000</p>
+                    <h3><a href="/producto">{{product.name}}</a></h3>
+                    <p>${{product.price}}</p>
                 </li>
-                <li class="card">
-                    <img src='https://upload.wikimedia.org/wikipedia/commons/5/54/Running_in_the_grass_yard%40Affectionate_Pet_Care.JPG' alt=''>
-                    <h3><a href="/producto">Lorem </a></h3>
-                    <p>$ 100000</p>
-                </li>
-                <li class="card">
-                    <img src='https://upload.wikimedia.org/wikipedia/commons/5/54/Running_in_the_grass_yard%40Affectionate_Pet_Care.JPG' alt=''>
-                    <h3><a href="/producto">Lorem </a></h3>
-                    <p>$ 100000</p>
-                </li>
+                
+                
             </ul>
         </div> 
     </div>    
 </template> 
 
 <script>
+import gql from "graphql-tag";
+
     export default {
     name: 'Products',
     
 
     data: function(){
-        return{
-            producto_nombre: JSON.parse(localStorage.getItem("Productos"))[0].nombre_producto,
-            producto_precio: JSON.parse(localStorage.getItem("Productos"))[0].precio_venta_producto,
-            productos: JSON.parse(localStorage.getItem("Productos")),
-
+        return {
+            product: [],
             products: [],
-            product: {
-                id: "",
+            createProduct: {
+                name: "",
+                price: 0,
+                isService: false,
+            },
+            modifyProduct: {
                 name: "",
                 price: "",
-                isService: ""
-            }
+                isService: false,
+            },
+            idProductDelete: "",
+            idProductModi: ""
         }
     },
 
