@@ -12,7 +12,7 @@
             <ul class="card-wrapper">
                 <li class="card">
                     <img src='https://upload.wikimedia.org/wikipedia/commons/5/54/Running_in_the_grass_yard%40Affectionate_Pet_Care.JPG' alt=''>
-                    <h3><a href="/producto">Lorem </a></h3>
+                    <h3>{{}}</h3>
                     <p>$ 100000</p>
                 </li>
                 <li class="card">
@@ -39,10 +39,46 @@
         return{
             producto_nombre: JSON.parse(localStorage.getItem("Productos"))[0].nombre_producto,
             producto_precio: JSON.parse(localStorage.getItem("Productos"))[0].precio_venta_producto,
-            productos: JSON.parse(localStorage.getItem("Productos"))
+            productos: JSON.parse(localStorage.getItem("Productos")),
+
+            products: [],
+            product: {
+                id: "",
+                name: "",
+                price: "",
+                isService: ""
+            }
         }
     },
-    created: function(){
+
+    methods: {
+       getProductsList: async function(){
+            await this.$apollo
+            .query({
+            query: gql`
+                query Products {
+                    products {
+                        id
+                        name
+                        price
+                        isService
+                    }
+                }
+                `,
+                    
+            })
+            .then((result) => {
+                this.products = result.data.products;
+            })
+            .catch((error) => {
+            alert("ERROR: Fallo geUserData");
+            });
+        },
+
+    },
+
+    created: async function(){
+        this.getProductsList();
     },
   }
 </script>
