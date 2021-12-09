@@ -24,8 +24,8 @@
                     <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
                          <h2><span>{{username}}</span></h2>
                         <button v-on:click="loadUserInfo">Mi info</button> 
-                        <button v-if="is_admin" v-on:click="loadAdminProducts">Productos</button>
-                        <button v-if="is_admin" v-on:click="loadAdminUsers">Usuarios</button>
+                        <button v-on:click="loadAdminProducts">Productos</button>
+                        <button v-on:click="loadAdminUsers">Usuarios</button>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,6 @@
                   v-on:completedLogIn="completedLogIn"
                   v-on:completedSignUp="completedSignUp"
                   v-on:logOut="logOut"
-                  v-on:completedGetUserAdmin="completedGetUserAdmin"
                 >
                 </router-view>
 
@@ -140,7 +139,7 @@ export default {
 			localStorage.clear();
 			alert("Sesión Cerrada");
       this.loadLogIn();
-      //location.reload();
+      location.reload();
 		},
 
     getUserData: async function(){
