@@ -1,13 +1,6 @@
 <template>
     <div class ="cuerpo">
-        <div class="list-group">               
-            <ul>
-                <button>Planes</button>
-                <button>Servicios</button>
-                <button>Cuentas</button>
-                <button>Ofertas</button>
-            </ul>
-        </div>
+        <br>
         <div class ="catalogue">
             <ul class="card-wrapper">
                 
@@ -37,12 +30,14 @@ import gql from "graphql-tag";
             createProduct: {
                 name: "",
                 price: 0,
-                isService: false,
+                service: false,
+                imgSrc: ""
             },
             modifyProduct: {
                 name: "",
                 price: "",
-                isService: false,
+                service: false,
+                imgSrc: ""
             },
             idProductDelete: "",
             idProductModi: ""
@@ -59,7 +54,8 @@ import gql from "graphql-tag";
                         id
                         name
                         price
-                        isService
+                        service
+                        imgSrc
                     }
                 }
                 `,

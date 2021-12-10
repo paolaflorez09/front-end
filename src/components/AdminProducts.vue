@@ -13,6 +13,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Precio</th>
                     <th scope="col">isService</th>
+                    <th scope="col">imgSource</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -21,7 +22,8 @@
                     <th scope="row">{{product.id}}</th>
                     <td>{{product.name}}</td>
                     <td>{{product.price}}</td>
-                    <td>{{product.isService}}</td>
+                    <td>{{product.service}}</td>
+                    <td>{{product.imgSrc}}</td>
                     <td>
                         <button v-on:click="getModiProductId(product)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modify" data-bs-whatever="@mdo">Modificar</button>
                         <button v-on:click="getProductId(product.id)" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Delete" data-bs-whatever="@mdo">Borrar</button>
@@ -89,9 +91,17 @@
 
                 <div class="d-flex flex-row align-items-center mb-4">
                 <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                <select class="dropDownCentroOpciones" v-model="createProduct.service">
+                    <option selected :value="true">Producto</option>
+                    <option :value="false">Servicio</option>
+                </select>    
+                </div>
+
+                <div class="d-flex flex-row align-items-center mb-4">
+                <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                 <div class="form-outline flex-fill mb-0">
-                    <input v-model="createProduct.isService" type="text" id="form3Example4cda" class="form-control" />
-                    <label class="form-label" for="form3Example4cda">¿Es servicio?</label>
+                    <input v-model="createProduct.imgSrc" type="text" id="form3Example4cdax" class="form-control" />
+                    <label class="form-label" for="form3Example4cdax">imgSrc</label>
                 </div>
                 </div>
 
@@ -99,7 +109,7 @@
 
             </div>
             <div class="modal-footer">
-                <button v-on:click="createAnProduct" type="button" class="btn btn-danger" >Crear</button>
+                <button v-on:click="createAnProduct" type="button" class="btn btn-success" >Crear</button>
             </div>
             </div>
         </div>
@@ -133,9 +143,17 @@
 
                 <div class="d-flex flex-row align-items-center mb-4">
                 <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                <select class="dropDownCentroOpciones" v-model="modifyProduct.service" :placeholder="[[idProductModi.service]]">
+                    <option selected :value="true">Producto</option>
+                    <option :value="false">Servicio</option>
+                </select>    
+                </div>
+
+                <div class="d-flex flex-row align-items-center mb-4">
+                <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                 <div class="form-outline flex-fill mb-0">
-                    <input v-model="modifyProduct.isService" type="text" id="form3Example4cd" class="form-control" :placeholder="[[idProductModi.isService]]" />
-                    <label class="form-label" for="form3Example4cd">¿Es servicio?</label>
+                    <input v-model="modifyProduct.imgSrc" type="text" id="form3Example4cdax" class="form-control" :placeholder="[[idProductModi.imgSrc]]" />
+                    <label class="form-label" for="form3Example4cdax">imgSrc</label>
                 </div>
                 </div>
 
@@ -164,12 +182,14 @@ export default {
             createProduct: {
                 name: "",
                 price: 0,
-                isService: false,
+                service: false,
+                imgSrc: ""
             },
             modifyProduct: {
                 name: "",
                 price: "",
-                isService: false,
+                service: false,
+                imgSrc: ""
             },
             idProductDelete: "",
             idProductModi: ""
@@ -186,7 +206,8 @@ export default {
                         id
                         name
                         price
-                        isService
+                        service
+                        imgSrc
                     }
                 }
                 `,
@@ -202,15 +223,15 @@ export default {
 
         getProductId: function(productID){
             this.idProductDelete = productID;
-            console.log(this.idProductDelete);
+
         },
 
         getModiProductId: function(product){
             this.idProductModi = product;
-            console.log(this.idProductModi);
         },
 
         createAnProduct: async function(){
+            console.log(typeof(this.createProduct.service));
             await this.$apollo
                 .mutate({
                 mutation: gql`
@@ -219,7 +240,7 @@ export default {
                         id
                         name
                         price
-                        isService
+                        service
                     }
                 }
                 `,
@@ -231,7 +252,6 @@ export default {
                 alert("Producto "+result.data.createProduct.name+" creado");
                 this.getProductsList();
                 this.$forceUpdate();
-                
             })
             .catch((error) => {
             alert("ERROR: Fallo creando producto");
@@ -248,7 +268,8 @@ export default {
                         id
                         name
                         price
-                        isService
+                        service
+                        imgSrc
                     }
                 }
                 `,
@@ -396,7 +417,7 @@ export default {
         width: 100%;
         width: 100%;
         height: 40px;
-        border: 1px solid #5b06a0;
+        border: 1px solid #858585;
         border-radius: 5px;
         padding: 10px 25px;
         margin: 5px 0 25px 0;
