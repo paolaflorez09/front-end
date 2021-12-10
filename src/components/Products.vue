@@ -5,7 +5,7 @@
             <ul class="card-wrapper">
                 
                     <li class="card" v-for="product in products" v-bind:key="product.id">
-                    <img src='https://upload.wikimedia.org/wikipedia/commons/5/54/Running_in_the_grass_yard%40Affectionate_Pet_Care.JPG' alt=''>
+                    <img :src="product.imgSrc" alt=''>
                     <h3><a href="/producto">{{product.name}}</a></h3>
                     <p>${{product.price}}</p>
                 </li>

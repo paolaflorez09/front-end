@@ -12,8 +12,8 @@
                     <th scope="col">id</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Precio</th>
-                    <th scope="col">isService</th>
-                    <th scope="col">imgSource</th>
+                    <th scope="col">¿Es Servicio?</th>
+                    <!-- <th scope="col">imgSource</th> -->
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -23,7 +23,7 @@
                     <td>{{product.name}}</td>
                     <td>{{product.price}}</td>
                     <td>{{product.service}}</td>
-                    <td>{{product.imgSrc}}</td>
+                    <!-- <td>{{product.imgSrc.substring(0,3)}}</td> -->
                     <td>
                         <button v-on:click="getModiProductId(product)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modify" data-bs-whatever="@mdo">Modificar</button>
                         <button v-on:click="getProductId(product.id)" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Delete" data-bs-whatever="@mdo">Borrar</button>
@@ -55,7 +55,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button v-on:click="deleteProduct(idProductDelete)" type="button" class="btn btn-danger">Borrar</button>
+                <button data-bs-dismiss="modal" v-on:click="deleteProduct(idProductDelete)" type="button" class="btn btn-danger">Borrar</button>
             </div>
             </div>
         </div>
@@ -109,7 +109,7 @@
 
             </div>
             <div class="modal-footer">
-                <button v-on:click="createAnProduct" type="button" class="btn btn-success" >Crear</button>
+                <button data-bs-dismiss="modal" v-on:click="createAnProduct" type="button" class="btn btn-success" >Crear</button>
             </div>
             </div>
         </div>
@@ -152,7 +152,7 @@
                 <div class="d-flex flex-row align-items-center mb-4">
                 <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                 <div class="form-outline flex-fill mb-0">
-                    <input v-model="modifyProduct.imgSrc" type="text" id="form3Example4cdax" class="form-control" :placeholder="[[idProductModi.imgSrc]]" />
+                    <input v-model="modifyProduct.imgSrc" type="text" id="form3Example4cdax" class="form-control" />
                     <label class="form-label" for="form3Example4cdax">imgSrc</label>
                 </div>
                 </div>
@@ -160,7 +160,7 @@
             </form>
 
             <div class="modal-footer">
-                <button v-on:click="modifyAnProduct" type="submit" class="btn btn-primary" >Modificar</button>
+                <button data-bs-dismiss="modal" v-on:click="modifyAnProduct" type="button" class="btn btn-primary" >Modificar</button>
             </div>
             </div>
         </div>

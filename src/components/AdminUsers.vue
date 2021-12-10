@@ -55,8 +55,8 @@
                             <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input v-model="modifyUser.password" type="password" id="form3Example4cd" class="form-control"/>
-                                <label class="form-label" for="form3Example4cad">Contraseña</label>
+                                <input v-model="modifyUser.password" type="password" id="form3Example4cdf" class="form-control"/>
+                                <label class="form-label" for="form3Example4cdf">Contraseña</label>
                             </div>
                             </div>
 
@@ -79,7 +79,7 @@
                             <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input v-model="modifyUser.phone" type="text" id="form3Example1c" class="form-control" :placeholder="[[userModi.phone]]" />
+                                <input v-model="modifyUser.phone" type="text" id="form3Example1c1" class="form-control" :placeholder="[[userModi.phone]]" />
                                 <label class="form-label" for="form3Example1c1">Número telefónico</label>
                             </div>
                             </div>
@@ -95,7 +95,7 @@
                         </form>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" v-on:click="modifyAnUser">Modificar</button>
+                <button data-bs-dismiss="modal" type="button" class="btn btn-primary" v-on:click="modifyAnUser">Modificar</button>
             </div>
             </div>
         </div>
@@ -189,12 +189,18 @@ export default {
             .then((result) => {
                 alert("Producto "+result.data.updateUser.id+" Modificado");
                 this.getUserList();
-                this.$forceUpdate();
-                this.modifyUser = "";
+                //this.$forceUpdate();
+                this.modifyUser.username = "",
+                this.modifyUser.password = "",
+                this.modifyUser.name = "",
+                this.modifyUser.email = "",
+                this.modifyUser.phone = 0,
+                this.modifyUser.admin = false
             })
             .catch((error) => {
-            alert("ERROR: Fallo modificando producto");
-            });
+                console.log(error)
+                alert("ERROR: Fallo modificando producto");
+            }); 
 
         }
     },

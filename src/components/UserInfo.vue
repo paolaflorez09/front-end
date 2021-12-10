@@ -132,7 +132,7 @@
                         </form>
 
             <div class="modal-footer">
-                <button v-on:click="modifyAnUser" type="submit" class="btn btn-primary" >Modificar</button>
+                <button data-bs-dismiss="modal" v-on:click="modifyAnUser" type="submit" class="btn btn-primary" >Modificar</button>
             </div>
             </div>
         </div>
@@ -159,7 +159,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button v-on:click="deleteMyUser" type="button" class="btn btn-danger">Borrar</button>
+                <button data-bs-dismiss="modal" v-on:click="deleteMyUser" type="button" class="btn btn-danger">Borrar</button>
             </div>
             </div>
         </div>
