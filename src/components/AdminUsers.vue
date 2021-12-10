@@ -85,11 +85,11 @@
                             </div>
 
                             <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input v-model="modifyUser.admin" type="text" id="form3Example1c" class="form-control" :placeholder="[[userModi.admin]]" />
-                                <label class="form-label" for="form3Example1c4">¿Es admin?</label>
-                            </div>
+                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                            <select class="dropDownCentroOpciones" v-model="modifyUser.admin" :placeholder="[[userModi.admin]]">
+                                <option selected :value="true">Admin</option>
+                                <option :value="false">No admin</option>
+                            </select>    
                             </div>
 
                         </form>
@@ -299,7 +299,7 @@ export default {
         width: 100%;
         width: 100%;
         height: 40px;
-        border: 1px solid #5b06a0;
+        border: 1px solid #9e9e9e;
         border-radius: 5px;
         padding: 10px 25px;
         margin: 5px 0 25px 0;
