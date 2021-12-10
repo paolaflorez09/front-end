@@ -2,6 +2,7 @@
 
     <div class="container-grid">
         <h2>Usuarios</h2>
+        <br>
         <div class="container" >
             <table class="table table-hover" >
             <thead>
@@ -41,58 +42,58 @@
             </div>
 
                     
-                        <br>
-                        <form class="mx-1 mx-md-4">
-                            <br>
-                            <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input v-model="modifyUser.username" type="text" id="form3Example1c" class="form-control" :placeholder="[[userModi.username]]" />
-                                <label class="form-label" for="form3Example1c">Nombre de Usuario</label>
-                            </div>
-                            </div>
+                <br>
+                <form class="mx-1 mx-md-4">
+                    <br>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                        <input v-model="modifyUser.username" type="text" id="form3Example1c" class="form-control" :placeholder="[[userModi.username]]" />
+                        <label class="form-label" for="form3Example1c">Nombre de Usuario</label>
+                    </div>
+                    </div>
 
-                            <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input v-model="modifyUser.password" type="password" id="form3Example4cdf" class="form-control"/>
-                                <label class="form-label" for="form3Example4cdf">Contraseña</label>
-                            </div>
-                            </div>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                        <input v-model="modifyUser.password" type="password" id="form3Example4cdf" class="form-control"/>
+                        <label class="form-label" for="form3Example4cdf">Contraseña</label>
+                    </div>
+                    </div>
 
-                            <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input v-model="modifyUser.name" type="text" id="form3Example4cd" class="form-control" :placeholder="[[userModi.name]]" />
-                                <label class="form-label" for="form3Example4cd">Nombre</label>
-                            </div>
-                            </div>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                        <input v-model="modifyUser.name" type="text" id="form3Example4cd" class="form-control" :placeholder="[[userModi.name]]" />
+                        <label class="form-label" for="form3Example4cd">Nombre</label>
+                    </div>
+                    </div>
 
-                            <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input v-model="modifyUser.email" type="text" id="form3Example3c" class="form-control" :placeholder="[[userModi.email]]" />
-                                <label class="form-label" for="form3Example3c">Email</label>
-                            </div>
-                            </div>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                        <input v-model="modifyUser.email" type="text" id="form3Example3c" class="form-control" :placeholder="[[userModi.email]]" />
+                        <label class="form-label" for="form3Example3c">Email</label>
+                    </div>
+                    </div>
 
-                            <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input v-model="modifyUser.phone" type="text" id="form3Example1c1" class="form-control" :placeholder="[[userModi.phone]]" />
-                                <label class="form-label" for="form3Example1c1">Número telefónico</label>
-                            </div>
-                            </div>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                        <input v-model="modifyUser.phone" type="text" id="form3Example1c1" class="form-control" :placeholder="[[userModi.phone]]" />
+                        <label class="form-label" for="form3Example1c1">Número telefónico</label>
+                    </div>
+                    </div>
 
-                            <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                            <select class="dropDownCentroOpciones" v-model="modifyUser.admin" :placeholder="[[userModi.admin]]">
-                                <option selected :value="true">Admin</option>
-                                <option :value="false">No admin</option>
-                            </select>    
-                            </div>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <select class="dropDownCentroOpciones" v-model="modifyUser.admin" :placeholder="[[userModi.admin]]">
+                        <option selected :value="true">Admin</option>
+                        <option :value="false">No admin</option>
+                    </select>    
+                    </div>
 
-                        </form>
+                </form>
 
             <div class="modal-footer">
                 <button data-bs-dismiss="modal" type="button" class="btn btn-primary" v-on:click="modifyAnUser">Modificar</button>

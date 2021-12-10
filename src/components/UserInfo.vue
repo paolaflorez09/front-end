@@ -92,7 +92,7 @@
                             <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input v-model="modifyUser.password" type="password" id="form3Example4cd" class="form-control"/>
+                                <input v-model="modifyUser.password" type="password" id="form3Example4cad" class="form-control"/>
                                 <label class="form-label" for="form3Example4cad">Contraseña</label>
                             </div>
                             </div>
@@ -116,7 +116,7 @@
                             <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input v-model="modifyUser.phone" type="text" id="form3Example1c" class="form-control" :placeholder="[[userInfo.phone]]" />
+                                <input v-model="modifyUser.phone" type="text" id="form3Example1c1" class="form-control" :placeholder="[[userInfo.phone]]" />
                                 <label class="form-label" for="form3Example1c1">Número telefónico</label>
                             </div>
                             </div>
@@ -124,8 +124,8 @@
                             <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input v-model="modifyUser.admin" type="text" id="form3Example1c" class="form-control" :placeholder="[[userInfo.admin]]" />
-                                <label class="form-label" for="form3Example1c4">¿Es admin?</label>
+                                <input v-model="modifyUser.admin" type="text" id="form3Example1cdf" class="form-control" :placeholder="[[userInfo.admin]]" />
+                                <label class="form-label" for="form3Example1cdf">¿Es admin?</label>
                             </div>
                             </div>
 
@@ -190,7 +190,7 @@ export default {
                 name: "",
                 email: "",
                 phone: "",
-                admin: false,
+                admin: "",
             },
         };
     },
@@ -233,7 +233,6 @@ export default {
      },
 
         modifyAnUser: async function(){
-            console.log(this.userInfo.id)
             await this.$apollo
                 .mutate({
                 mutation: gql`
@@ -256,7 +255,6 @@ export default {
             .then((result) => {
                 alert("Producto "+result.data.updateUser.id+" Modificado");
                 this.getUserData();
-                this.$forceUpdate();
                 this.modifyUser = "";
                 this.$emit("logOut");
             })
@@ -278,7 +276,6 @@ export default {
             })
             .then((result) => {
                 this.getUserData();
-                this.$forceUpdate();
                 alert("Eliminado con éxito");
                 this.modifyUser = "";
                 this.$emit("logOut");

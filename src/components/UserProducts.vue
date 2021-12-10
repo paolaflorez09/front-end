@@ -1,5 +1,24 @@
 <template>
 
+<div>
+    <button>Toggler</button>
+        <div class ="cuerpo">
+        <br>
+        <div class ="catalogue">
+            <ul class="card-wrapper">
+                
+                    <li class="card" v-for="product in products" v-bind:key="product.id">
+                    <img :src="product.imgSrc" alt=''>
+                    <h3><a href="/producto">{{product.name}}</a></h3>
+                    <p>${{product.price}}</p>
+                </li>
+                
+                
+            </ul>
+        </div> 
+    </div>    
+</div>
+
 
 
 </template>
@@ -13,24 +32,59 @@ export default {
 
     data: function(){
         return {
-            solicitud: [],
-            solicitudes: [],
-            user: {
-                cedula: "",
-                nombreCliente: "",
-                ciudad: "",
-                FinalizedState: "",
-                idcentro: "",
-                mensaje: ""
+            product: [],
+            products: [],
+            createProduct: {
+                name: "",
+                price: 0,
+                service: false,
+                imgSrc: ""
             },
-            idSoliEliminar: "",
-            idSoliModi: ""
+            modifyProduct: {
+                name: "",
+                price: "",
+                service: false,
+                imgSrc: ""
+            },
+            idProductDelete: "",
+            idProductModi: ""
         }
     },
 
     methods: {
-        getSolicitudesList: async function(){
+        getUserData: async function(){
 
+            await this.$apollo
+            .query({
+            query: gql`
+                query UserDetailById {
+                    userDetailById {
+                        id
+                        username
+                        name
+                        email
+                        phone
+                        admin
+                    }
+                }
+                `,
+                
+            })
+            .then((result) => {
+                let dataGet = {
+                        id: result.data.userDetailById.id,
+                        username: result.data.userDetailById.username,
+                        name: result.data.userDetailById.name,
+                        email: result.data.userDetailById.email,
+                        phone: result.data.userDetailById.phone,
+                        admin: result.data.userDetailById.admin
+                };
+                this.userInfo = dataGet;
+            })
+            .catch((error) => {
+                console.log(error)
+            alert("ERROR: Fallo geUserData");
+            });
         },
 
         deleteSoli: function(id) {
@@ -51,5 +105,7 @@ export default {
 
 
 <style>
+
+
 
 </style>
