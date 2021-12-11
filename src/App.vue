@@ -7,10 +7,10 @@
           <div>
             <button v-on:click="loadHome">Guarderia</button>
             <button v-on:click="loadProducts">Productos</button>
-            <button v-on:click="loadAboutUs">About Us</button>
+            <button v-on:click="loadAboutUs">Acerca de nosotros</button>
           </div>
           <div>
-            <button v-if="!is_auth" v-on:click="loadLogIn">Login</button>
+            <button v-if="!is_auth" v-on:click="loadLogIn">Ingresar</button>
             <button v-if="!is_auth" v-on:click="loadSignUp">Registrarse</button>
             <button v-if="is_auth" v-on:click="logOut"> Cerrar Sesión </button>
           </div>
@@ -20,16 +20,34 @@
     <div class="container-fluid">
         <div class="row flex-nowrap">
             <div v-if="is_auth" class="col-auto px-0">
+
                 <div id="sidebar" class="collapse collapse-horizontal show border-end">
+
                     <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
-                         <h2><span>{{username}}</span></h2>
-                        <button v-on:click="loadUserInfo">Mi info</button> 
-                        <button v-on:click="loadAdminProducts">Productos</button>
-                        <button v-on:click="loadAdminUsers">Usuarios</button>
+                        <br>
+                        <h2><span>{{gettingUsername}}</span></h2>
+
+                        <div class="divider d-flex align-items-center my-4">
+                          <p class="text-center fw-bold mx-3 mb-0"></p>
+                        </div>
+
+                        <button v-on:click="loadUserProducts" class="btn btn-light">Mis Productos</button>
+                        <button v-on:click="loadUserInfo" class="btn btn-light">Mi info</button> 
+                        <div v-if="gettingAdmin" class="divider d-flex align-items-center my-4">
+                          <p v-if="gettingAdmin" class="text-center fw-bold mx-3 mb-0"> Admin</p>
+                        </div>
+                        <button v-if="gettingAdmin" v-on:click="loadAdminProducts" class="btn btn-light">Productos</button>
+                        <button v-if="gettingAdmin" v-on:click="loadAdminUsers" class="btn btn-light">Usuarios</button>
+                        
+
                     </div>
+
                 </div>
+                
             </div>
+            
             <main class="col ps-md-2 pt-2">
+
               <div class = "main-component">
                 <router-view
                   v-on:completedLogIn="completedLogIn"
@@ -61,11 +79,6 @@ export default {
 
   name: 'App',
 
-    data: function() {
-        return {
-        };
-    },
-
   computed: {
     is_auth: {
       get: function() {
@@ -73,12 +86,27 @@ export default {
       },
       set: function() { }
     },
+    gettingUsername: {
+      get: function() {
+        return this.username = localStorage.getItem("username") || "";
+      },
+      set: function() {}
+    },
+    gettingAdmin: {
+      get: function(){
+        if (localStorage.getItem("is_admin") === "true")
+          return this.is_admin = true
+        else
+          return this.is_admin = false
+      },
+      set: function(){}
+    }
 
   },
 
-  data: async function(){
+  data: function(){
     return {
-      is_admin: false,
+      is_admin: "",
       username: ""
     }
   },
@@ -116,18 +144,17 @@ export default {
       this.$router.push({ name: "UserInfo" });
     },
 
+    loadUserProducts: function() {
+      this.$router.push({ name: "UserProducts"});
+    },
+
     completedLogIn: async function(data) {
-      localStorage.clear();
 			localStorage.setItem("token_access", data.token_access);
 			localStorage.setItem("token_refresh", data.token_refresh);
-      //console.log(localStorage.getItem("token_refresh"))
       await this.getUserData();
       alert("Autenticación Exitosa");
-      console.log(localStorage.getItem("is_admin"));
-      this.username = localStorage.getItem("username");
-      this.is_admin = localStorage.getItem("is_admin");
-      console.log(this.is_admin);
-			this.loadUserInfo();
+			this.loadUserProducts();
+      
     },
 
     completedSignUp: function(data) {
@@ -169,7 +196,6 @@ export default {
                     admin: result.data.userDetailById.admin
             };
             localStorage.setItem("is_admin", dataGet.admin);
-            this.is_admin = dataGet.admin;
             localStorage.setItem("username", dataGet.username);
         })
         .catch((error) => {
@@ -282,15 +308,19 @@ export default {
     background-color: white;
   }
 
-#sidebar-nav {
+ #sidebar-nav {
     width: 200px;
 }
 
 .col-auto{
-    color: white;
-    background-color: rgb(85, 182, 85);
-    float: left;
-    /*position: fixed;*/
+
+    background-color: rgb(204, 204, 204);
+
+}
+
+.container-fluid{
+    /*color: white;*/
+    background-color: rgb(255, 255, 255);
     z-index: 1;
     top: 0;
     left: 0;
@@ -301,5 +331,16 @@ export default {
     flex-direction: column;
 }
 
+.btn{
+  margin: 1px;
+}
+
+h2{
+  text-align: center;
+}
+
+.divider{
+  color: rgb(119, 119, 119)
+}
 
 </style>
