@@ -1,18 +1,11 @@
 <template>
     <div class ="cuerpo">
-        <div class="list-group">               
-            <ul>
-                <button>Planes</button>
-                <button>Servicios</button>
-                <button>Cuentas</button>
-                <button>Ofertas</button>
-            </ul>
-        </div>
+        <br>
         <div class ="catalogue">
             <ul class="card-wrapper">
                 
                     <li class="card" v-for="product in products" v-bind:key="product.id">
-                    <img src='https://upload.wikimedia.org/wikipedia/commons/5/54/Running_in_the_grass_yard%40Affectionate_Pet_Care.JPG' alt=''>
+                    <img :src="product.imgSrc" alt=''>
                     <h3><a href="/producto">{{product.name}}</a></h3>
                     <p>${{product.price}}</p>
                 </li>
@@ -37,12 +30,14 @@ import gql from "graphql-tag";
             createProduct: {
                 name: "",
                 price: 0,
-                isService: false,
+                service: false,
+                imgSrc: ""
             },
             modifyProduct: {
                 name: "",
                 price: "",
-                isService: false,
+                service: false,
+                imgSrc: ""
             },
             idProductDelete: "",
             idProductModi: ""
@@ -59,7 +54,8 @@ import gql from "graphql-tag";
                         id
                         name
                         price
-                        isService
+                        service
+                        imgSrc
                     }
                 }
                 `,
